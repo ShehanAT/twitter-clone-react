@@ -10,7 +10,11 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={redux.persistor}>
       <App />  
     </PersistGate>
-  </Provider>,
+  </Provider>
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>
+  ,
   document.getElementById('root')
 );
 

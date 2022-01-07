@@ -69,7 +69,7 @@ const Routes = () => {
     return (
         <HashRouter>
             <Switch>
-                <PrivateRoute exact path="/" component={SignIn} homeAuthenticated />
+                {/* <PrivateRoute exact path="/" component={SignIn} homeAuthenticated />
                 <PrivateRoute exect path="/home" component={withMenuBar(Home)} />
                 <Route path="/explore" component={withMenuBar(Explore)} />
                 <PrivateRoute 
@@ -101,12 +101,12 @@ const Routes = () => {
                 <Route 
                     path="/:username/status/:tweetId/retweets"
                     component={withMenuBar(withRetweetModal(tweet))}
-                />
+                /> */}
                 <Route 
                     path="/graphql"
                     component={GraphQL}
                 />
-                <Route component={withOnlyMenuBar(PageNotFound)} />
+                {/* <Route component={withOnlyMenuBar(PageNotFound)} /> */}
             </Switch>
         </HashRouter>
     )

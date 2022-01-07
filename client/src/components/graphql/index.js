@@ -1,3 +1,4 @@
+import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import GetUsers from "../graphql-components/GetUsers";
@@ -30,4 +31,4 @@ const GraphQL = () => {
     );
 }
 
-
+export default GraphQL;

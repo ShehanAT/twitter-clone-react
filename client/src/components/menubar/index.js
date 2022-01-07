@@ -1,4 +1,11 @@
-
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, NavLink, useHistory } from "react-router-dom";
+// import Icon from "../icon";
+// import Modal from "../modal";
+// import { Header, MenuItem, MenuTitle, Button } from "../styles/menubar";
+// import TweetModal from "./tweetModal";
+import { LOGOUT_USER, SET_THEME } from "../../redux/actions";
 
 const MenuBar = () => {
     // useState() declares a "state variable". This is a way to "preserve" some values between the function calls 

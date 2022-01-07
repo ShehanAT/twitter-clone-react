@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-import { LOAD_USERS } from "../GraphQL/Queries";
+import { LOAD_USERS } from "../graphql/queries";
 
 function GetUsers(){
     const { error, loading, data } = useQuery(LOAD_USERS);
@@ -8,17 +8,16 @@ function GetUsers(){
     useEffect(() => {
         if(data){
             setUsers(data.getAllUsers);
+            console.log(data.getAllUsers);
         }
     }, [data]);
 
     return (
         <div>
-            {
-                /* {" "}
-                { users.map((val) => {
-                    return <h1> {val.firstName}</h1>;
-                })}
-                */
+            { 
+            users.map((val) => {
+                return <h1> {val.firstName}</h1>;
+            })
             }
         </div>
     );
