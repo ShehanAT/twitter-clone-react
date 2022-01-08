@@ -50,7 +50,7 @@ const Mutation = {
     },
     updateUser(parent, args, { db }, info){
         const { id, data } = args;
-        const user = db.users.find((ser) => user.id === id);
+        const user = db.users.find((user) => user.id === id);
 
         if(!user){
             throw new Error("User not found!");
@@ -112,7 +112,7 @@ const Mutation = {
             throw new Error("Post not found");
         }
 
-        // removing the post to be deleted from the db.posts array using splice()
+        // fetching the post to be deleted from the db.posts array using splice() and assigning it to the `post` variable 
         const [post] = db.posts.splice(postIndex, 1);
 
         db.comments = db.comments.filter((comment) => comment.post !== args.id);
@@ -127,5 +127,68 @@ const Mutation = {
         }
 
         return post;
-    }
+    },
+    updatePost(parent, args, { db }, info){
+        const { id, data } = args;
+        const foundPost = db.posts.find((post) => { post.id === id });
+        const originalPost = { ...foundPost }
+        
+        if(!foundPost){
+            throw new Error("Post not found!");
+        }
+
+        if(typeof data.title === "string"){
+            const duplicatePost = db.posts.some((post) => { post.title === data.title });
+            
+            if(duplicatePost){
+                throw new Error("Duplicate post title found!");
+            }
+            foundPost.title = data.tile;
+        }
+
+        if(typeof data.body === "string"){
+            foundPost.body = data.body;
+        }
+
+        if(typeof data.published === "boolean"){
+            foundPost.published = data.published;
+
+            if(originalPost.published && !foundPost.published){
+                // delete original post and replace it with new post 
+                pubsub.publish("publish", {
+                    post: {
+                        mutation: "DELETED",
+                        data: originalPost
+                    }
+                });
+
+                pubsub.publish("publish", {
+                    post: {
+                        mutation: "CREATED",
+                        data: foundPost
+                    }
+                });
+            }else if(!originalPost.published && foundPost.published){
+                pubsub.publish("publish", {
+                    post: {
+                        mutation: "CREATED",
+                        data: foundPost
+                    }
+                })
+            }
+        }else if(foundPost.published){
+            pubsub.publish("publish", {
+                post: {
+                    mutation: "UPDATED",
+                    data: foundPost
+                }
+            })
+        }
+
+        if(typeof data.author !== "undefined"){
+            foundPost.author = data.author;
+        }
+
+        return foundPost;
+    },
 }
