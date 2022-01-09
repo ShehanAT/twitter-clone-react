@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const LOAD_USERS = gql`
+export const TWEETS_QUERY = gql`
     query {
-        getAllUsers {
-            id
-            firstName
-            email
-            password
+        posts {
+            title 
+            body 
+            author {
+                name 
+            }
+            published 
         }
     }
 `
