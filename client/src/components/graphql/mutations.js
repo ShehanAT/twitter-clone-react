@@ -18,7 +18,8 @@ export const CREATE_TWEETS_MUTATION = gql`
             title 
             body 
             author {
-                name 
+                firstName 
+                lastName  
             }
             published 
         }

@@ -8,7 +8,8 @@ export const TWEETS_SUBSCRIPTION = gql`
                 title 
                 body 
                 author {
-                    name 
+                    firstName 
+                    lastName 
                 }
                 published 
             }

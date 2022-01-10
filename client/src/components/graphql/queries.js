@@ -2,11 +2,12 @@ import { gql } from "@apollo/client";
 
 export const TWEETS_QUERY = gql`
     query {
-        posts {
+        tweets {
             title 
             body 
             author {
-                name 
+                firstName 
+                lastName  
             }
             published 
         }

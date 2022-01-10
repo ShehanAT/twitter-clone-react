@@ -1,4 +1,4 @@
-import db from "./config/db.js";
+import db from "./database/db.js";
 import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
 import Subscription from "./resolvers/Subscription.js";
