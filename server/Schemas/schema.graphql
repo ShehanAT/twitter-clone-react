@@ -1,9 +1,25 @@
 type Query {
     users(query: String): [User!]!
-    posts(query: String): [Post!]!
+    tweets(query: String): [Tweet!]!
     comments: [Comment!]!
     me: User!
-    post: Post! 
+    tweet: Tweet! 
+}
+
+type Mutation {
+    createUser(data: CreateUserInput!): User! 
+    updateUser(data: UpdateUserInput!): User
+    deleteUser(id: ID!): User! 
+    createTweet(data: CreateTweetInput!): Tweet! 
+    updateTweet(data: UpdateTweetInput!): User 
+    deleteTweet(id: ID!): Tweet!
+    createComment(data: CreateCommentInput!): Tweet!
+    deleteComment(id: ID!): Comment! 
+}
+
+type Subscription {
+    comment(tweetId: ID!): CommentSubscriptionPayload! 
+    tweet: TweetSubscriptionPayload!
 }
 
 type User {
@@ -12,11 +28,11 @@ type User {
     lastName: String!
     email: String!
     age: Int 
-    posts: [Post!]!
+    tweets: [Tweet!]!
     comments: [Comment!]!
 }
 
-type Post {
+type Tweet {
     id: ID!
     title: String!
     body: String!
@@ -29,12 +45,54 @@ type Comment {
     id: ID!
     text: String!
     author: User!
-    post: Post!
+    tweet: Tweet!
 }
 
 enum MutationType {
-    CREATED,
-    DELETED,
+    CREATED
+    DELETED
     UPDATED
 }
 
+input CreateUserInput {
+    # ! means non-nullable
+    name: String! 
+    email: String! 
+    age: Int 
+}
+
+input UpdateUserInput {
+    name: String
+    email: String 
+    age: Int 
+}
+
+input CreateTweetInput {
+    title: String! 
+    body: String! 
+    published: Boolean! 
+    author: ID!
+}
+
+input UpdateTweetInput {
+    title: String 
+    body: String 
+    published: Boolean 
+    author: ID
+}
+
+input CreateCommentInput {
+    text: String! 
+    author: ID! 
+    tweet: ID! 
+}
+
+type TweetSubscriptionPayload {
+    mutation: MutationType! 
+    data: Tweet! 
+} 
+
+type CommentSubscriptionPayload {
+    mutation: MutationType! 
+    data: Comment!
+}

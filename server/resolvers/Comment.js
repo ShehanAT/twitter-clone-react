@@ -4,9 +4,9 @@ const Comment = {
             return user.id === parent.author;
         });
     },
-    post(parent, args, { db }, info) {
-        return db.posts.find((post) => {
-            return post.id === parent.post;
+    tweet(parent, args, { db }, info) {
+        return db.tweets.find((tweet) => {
+            return tweet.id === parent.tweet;
         });
     },
 };

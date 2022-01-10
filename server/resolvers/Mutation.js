@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 const Mutation = {
     createUser(parent, args, { db }, info){
@@ -29,14 +29,14 @@ const Mutation = {
         // using splice() to delete found user. splice() changes the contents of an array by removing or replacing existing elements and/or adding new elements in place
         const deletedUsers = db.users.splice(userIndex, 1);
 
-        db.posts = db.posts.filter((post) => {
-            const match = post.author === args.id;
+        db.tweets = db.tweets.filter((tweet) => {
+            const match = tweet.author === args.id;
 
             if(match){
-                // comment.post == comment.post.id == post.id 
-                db.comments = db.comments.filter((comment) => comment.post !== post.id);
+                // comment.tweet == comment.tweet.id == tweet.id 
+                db.comments = db.comments.filter((comment) => comment.tweet !== tweet.id);
             }
-            // Only return posts not made by specified user
+            // Only return tweets not made by specified user
             return !match;
         });
 
@@ -77,118 +77,120 @@ const Mutation = {
 
         return user;
     },
-    createPost(parent, args, { db, pubsub }, info){
+    createTweet(parent, args, { db, pubsub }, info){
         const userExists = db.users.some((user) => user.id === args.data.author);
 
         if(!userExists){
             throw new Error("User not found!");
         }
 
-        const post = {
+        const tweet = {
             id: uuidv4(),
             ...args.data 
         }
 
         if(args.data.published){
-            // if published == True then use pubsub to publish post 
+            // if published == True then use pubsub to publish tweet 
 
             // PubSub is a class that exposes a simple Publish and subscribe API. It sits between your application's logic and the GraphQL subscription engine - it 
             // receives a publish command from your app logic and pushes it to your GraphQL execution engine
-            pubsub.publish('post', {
-                post: {
+            pubsub.publish('tweet', {
+                tweet: {
                     mutation: 'CREATED',
-                    data: post,
+                    data: tweet,
                 },
             });
         }
 
-        return post;
+        return tweet;
     },
-    deletePost(parent, args, { db, pubsub }, info){
-        // args is a Post instance, in this case
-        const postIndex = db.posts.findIndex((post) => post.id === args.id);
+    deleteTweet(parent, args, { db, pubsub }, info){
+        // args is a Tweet instance, in this case
+        const tweetIndex = db.tweets.findIndex((tweet) => tweet.id === args.id);
 
-        if(postIndex === -1){
-            throw new Error("Post not found");
+        if(tweetIndex === -1){
+            throw new Error("Tweet not found");
         }
 
-        // fetching the post to be deleted from the db.posts array using splice() and assigning it to the `post` variable 
-        const [post] = db.posts.splice(postIndex, 1);
+        // fetching the tweet to be deleted from the db.tweets array using splice() and assigning it to the `tweet` variable 
+        const [tweet] = db.tweets.splice(tweetIndex, 1);
 
-        db.comments = db.comments.filter((comment) => comment.post !== args.id);
+        db.comments = db.comments.filter((comment) => comment.tweet !== args.id);
 
-        if(post.published){
-            pubsub.publish('post', {
-                post: {
+        if(tweet.published){
+            pubsub.publish('tweet', {
+                tweet: {
                     mutation: 'DELETED',
-                    data: post,
+                    data: tweet,
                 },
             });
         }
 
-        return post;
+        return tweet;
     },
-    updatePost(parent, args, { db }, info){
+    updateTweet(parent, args, { db }, info){
         const { id, data } = args;
-        const foundPost = db.posts.find((post) => { post.id === id });
-        const originalPost = { ...foundPost }
+        const foundTweet = db.tweets.find((tweet) => { tweet.id === id });
+        const originalTweet = { ...foundTweet }
         
-        if(!foundPost){
-            throw new Error("Post not found!");
+        if(!foundTweet){
+            throw new Error("tweet not found!");
         }
 
         if(typeof data.title === "string"){
-            const duplicatePost = db.posts.some((post) => { post.title === data.title });
+            const duplicateTweet = db.tweets.some((tweet) => { tweet.title === data.title });
             
-            if(duplicatePost){
-                throw new Error("Duplicate post title found!");
+            if(duplicateTweet){
+                throw new Error("Duplicate tweet title found!");
             }
-            foundPost.title = data.tile;
+            foundTweet.title = data.tile;
         }
 
         if(typeof data.body === "string"){
-            foundPost.body = data.body;
+            foundTweet.body = data.body;
         }
 
         if(typeof data.published === "boolean"){
-            foundPost.published = data.published;
+            foundTweet.published = data.published;
 
-            if(originalPost.published && !foundPost.published){
-                // delete original post and replace it with new post 
+            if(originalTweet.published && !foundTweet.published){
+                // delete original tweet and replace it with new tweet 
                 pubsub.publish("publish", {
-                    post: {
+                    tweet: {
                         mutation: "DELETED",
-                        data: originalPost
+                        data: originalTweet
                     }
                 });
 
                 pubsub.publish("publish", {
-                    post: {
+                    tweet: {
                         mutation: "CREATED",
-                        data: foundPost
+                        data: foundTweet
                     }
                 });
-            }else if(!originalPost.published && foundPost.published){
+            }else if(!originalTweet.published && foundTweet.published){
                 pubsub.publish("publish", {
-                    post: {
+                    tweet: {
                         mutation: "CREATED",
-                        data: foundPost
+                        data: foundTweet
                     }
                 })
             }
-        }else if(foundPost.published){
+        }else if(foundTweet.published){
             pubsub.publish("publish", {
-                post: {
+                tweet: {
                     mutation: "UPDATED",
-                    data: foundPost
+                    data: foundTweet
                 }
             })
         }
 
         if(typeof data.author !== "undefined"){
-            foundPost.author = data.author;
+            foundTweet.author = data.author;
         }
 
-        return foundPost;
+        return foundTweet;
     },
 }
+
+export { Mutation as default };

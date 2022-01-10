@@ -1,20 +1,30 @@
-const express = require("express");
-const app = express();
-const PORT = 8080;
-const { graphqlHTTP } = require("express-graphql");
-const schema = require("./Schemas/index");
-const cors = require("cors");
+import db from "./config/db.js";
+import Query from "./resolvers/Query.js";
+import Mutation from "./resolvers/Mutation.js";
+import Subscription from "./resolvers/Subscription.js";
+import User from "./resolvers/User.js";
+import Tweet from "./resolvers/Tweet.js";
+import Comment from "./resolvers/Comment.js";
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 
-app.use(cors());
-app.use(express.json());
-app.use(
-    "/graphql",
-    graphqlHTTP({
-        schema,
-        graphiql: true,
-    })
-);
+const pubsub = new PubSub();
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-})
+const server = new GraphQLServer({
+    typeDefs: './Schemas/schema.graphql',
+    resolvers: {
+        Query,
+        Mutation,
+        Subscription,
+        User, 
+        Tweet,
+        Comment 
+    },
+    context: {
+        db,
+        pubsub 
+    },
+});
+
+server.start({ port: process.env.PORT | 8080}, () => {
+    console.log(`The server is running on port ${process.env.PORT | 8080}`);
+});

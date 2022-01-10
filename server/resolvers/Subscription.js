@@ -6,21 +6,21 @@ all clients in a particular chat room
 */
 const Subscription = {
     comment: {
-        subscribe(parent, { postId }, { db, pubsub }, info){
-            const post = db.posts.find((post) => {
-                    post.id === postId && post.published
+        subscribe(parent, { tweetId }, { db, pubsub }, info){
+            const tweet = db.tweets.find((tweet) => {
+                    tweet.id === tweetId && tweet.published
                 });
             
-                if(!post){
-                    throw new Error("Post not found!");
+                if(!tweet){
+                    throw new Error("Tweet not found!");
                 }
 
-                return pubsub.asyncIterator(`comment ${postId}`);
+                return pubsub.asyncIterator(`comment ${tweetId}`);
         },
     },
-    post: {
+    tweet: {
         subscribe(parent, args, { pubsub }, info){
-            return pubsub.asyncIterator('post');
+            return pubsub.asyncIterator('tweet');
         },
     },
 };

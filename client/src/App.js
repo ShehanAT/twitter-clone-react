@@ -17,6 +17,7 @@ import {
   CREATE_TWEETS_MUTATION,
   TWEETS_SUBSCRIPTION
 } from './components/graphql';
+import Tweet from "./components/tweet/index"
 
 const App = () => {
   const [ tweetTitle, setTweetTitle ] = useState("");
@@ -93,7 +94,36 @@ const App = () => {
                   />
                 </Col>
               </FormGroup>
+              <FormGroup>
+                <Label for="body">Message Content:</Label>
+                <Input 
+                  type="textarea"
+                  name="body"
+                  value={tweetBody}
+                  id="body"
+                  placeholder="Tweet Body..."
+                  onChange={(e) => setTweetBody(e.target.value)}
+                />
+              </FormGroup>
+              <Button 
+                type="submit"
+                color="primary"
+                disabled={tweetTitle === "" || tweetBody === ""}  
+              >
+                Post Tweet!
+              </Button>
             </Form>
+          </Col>
+          <Col xs="6">
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error: </p>
+            ) : (
+              data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+            )
+          
+          }
           </Col>
         </Row>
       </Container>
