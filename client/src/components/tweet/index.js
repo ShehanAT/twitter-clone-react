@@ -7,7 +7,7 @@ const Tweet = ({
     data: {
         title,
         body,
-        author: { name },
+        author: { firstName, lastName },
         published,
     },
 }) => (
@@ -16,7 +16,7 @@ const Tweet = ({
         <CardBody>
             {body || <p style={{ opacity: 0.5 }}>This tweet has no body...</p>}
         </CardBody>
-        <CardFooter>{`${name} - published: ${published}`}</CardFooter>
+        <CardFooter>{`${firstName} ${lastName} - published: ${published}`}</CardFooter>
     </Card>
 )
 
