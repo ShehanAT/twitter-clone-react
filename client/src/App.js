@@ -15,6 +15,7 @@ import classes from "./App.css";
 import { 
   TWEETS_QUERY,
   CREATE_TWEETS_MUTATION,
+  CREATE_USER_MUTATION,
   TWEETS_SUBSCRIPTION
 } from './components/graphql';
 import Tweet from "./components/tweet/index"
@@ -27,6 +28,8 @@ const App = () => {
   const { loading, error, data, subscribeToMore } = useQuery(TWEETS_QUERY);
   // useMutation() is the primary API for executing queries in an Apollo application
   const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
+  const [addUser] = useMutation(CREATE_USER_MUTATION);
+
 
   useEffect(() => {
     try {
@@ -63,11 +66,21 @@ const App = () => {
           authorId: 2
         },
       });
+
+      addUser({
+        variables: {
+          firstName: "Niccolo",
+          lastName: "Tesla",
+          email: "niccolotesla@gmail.com",
+          age: 46,
+          password: "teslaMotors123!"
+        }
+      });
       // reset tweetTitle and tweetBody to '' after previous tweet has been submitted
       setTweetTitle("");
       setTweetBody("");
     },
-    [addTweet, tweetTitle, tweetBody],
+    [addTweet, addUser, tweetTitle, tweetBody],
   );
 
     return (

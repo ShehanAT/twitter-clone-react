@@ -1,23 +1,27 @@
 import { v4 as uuidv4 } from 'uuid';
+import { User } from '../database/models.js';
 
 const Mutation = {
-    createUser(parent, args, { db }, info){
-        const emailTaken = db.users.some((user) => user.email === args.data.email);
+    async createUser(parent, args, { db }, info){
+        try {
+            console.log(args.data);
+            const existingUser = await User.findOne({ email: args.data.email })
+            if(existingUser){
+                throw new Error("That email address is already taken!");
+            }
+            // const hashedPassword = await bcrypt.hash(args.data.password, 12);
 
-        if(emailTaken){
-            throw new Error("Email taken");
+            const user = new User({
+                email: args.data.email,
+                password: '3rwejfsdlfjadfa'
+            });
+            
+            const result = await user.save();
+            
+            return { ...result._doc, password: null, _id: result.id }
+        }catch(err){
+            throw err;
         }
-
-        const user = {
-            id: uuidv4(), // creates a universally unique identifier(UUID) which is a 128-bit number 
-            ...args.data,
-        }
-
-        // save new user in database 
-        db.users.push(user);
-
-        return user;
-
     },
     deleteUser(parent, args, { db }, info){
         const userIndex = db.users.findIndex((user) => user.id === args.id)

@@ -1,49 +1,42 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from "mongoose-paginate";
 
+var userSchema = new mongoose.Schema();
+var tweetSchema = new mongoose.Schema();
+var commentSchema = new mongoose.Schema();
 
-
-
-var userSchema = new mongoose.Schema({});
-var tweetSchema = new mongoose.Schema({});
-
-var userSchema = new mongoose.Schema({
+userSchema.add({
     id: mongoose.ObjectId,
     firstName: String,
     lastName: String,
     email: String, 
     age: Number,
     tweets: [
-        new mongoose.Schema({
+        tweetSchema.add(new mongoose.Schema({
             id: mongoose.ObjectId,
             title: String,
             body: String,
             published: Boolean,
             author: userSchema,
             comments: [
-                new mongoose.Schema({
+                commentSchema.add(new mongoose.Schema({
                     id: mongoose.ObjectId,
                     text: String,
                     author: userSchema,
                     tweet: tweetSchema
-                })
+                }))
             ]
-        })
+        }))
     ],
     comments: [
-        new mongoose.Schema({
-            id: mongoose.ObjectId,
-            text: String,
-            author: userSchema,
-            tweet: tweetSchema
-        })
+        commentSchema
     ],
 
     password: String,
     passwordResetToken: String,
     passwordResetTokenExpires: Date, 
+});
 
-}, { timestamps: true });
 
 // Password hash middleware
 userSchema.pre('save', function(next){
@@ -68,24 +61,7 @@ userSchema.pre('save', function(next){
 // mongoose-paginate is used to paginate the response received from any data source 
 userSchema.plugin(mongoosePaginate)
 
-var commentSchema = new mongoose.Schema({
-    id: mongoose.ObjectId,
-    text: String,
-    author: userSchema,
-    tweet: tweetSchema
-});
-
-var tweetSchema = new mongoose.Schema({
-    id: mongoose.ObjectId,
-    title: String,
-    body: String,
-    published: Boolean,
-    author: userSchema,
-    comments: [commentSchema]
-});
-
 var Tweet = mongoose.model('Tweet', tweetSchema);
-
 
 var User = mongoose.model('User', userSchema);
 

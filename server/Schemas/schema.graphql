@@ -56,10 +56,13 @@ enum MutationType {
 
 input CreateUserInput {
     # ! means non-nullable
-    name: String! 
+    firstName: String!
+    lastName: String! 
     email: String! 
     age: Int 
+    
 }
+
 
 input UpdateUserInput {
     name: String

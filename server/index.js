@@ -7,6 +7,10 @@ import Tweet from "./resolvers/Tweet.js";
 import Comment from "./resolvers/Comment.js";
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import { User as MongooseUser } from "./database/models.js";
+import mongoose from "mongoose";
+import path from "path";
+import { MONGODB_CONNECTION_URI } from "./config/environment.js";
+
 
 const pubsub = new PubSub();
 
@@ -25,6 +29,16 @@ const server = new GraphQLServer({
         pubsub 
     },
 });
+
+mongoose.connect(MONGODB_CONNECTION_URI, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+});
+mongoose.connection.on('error', () => {
+    console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
+    process.exit(1);
+});
+mongoose.set('debug', true);
 
 server.start({ port: process.env.PORT | 8080}, () => {
     console.log(`The server is running on port ${process.env.PORT | 8080}`);
