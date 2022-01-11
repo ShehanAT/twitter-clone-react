@@ -10,12 +10,13 @@ import { User as MongooseUser } from "./database/models.js";
 import mongoose from "mongoose";
 import path from "path";
 import { MONGODB_CONNECTION_URI } from "./config/environment.js";
-
+// import path from 'path';
+const __dirname = path.resolve();
 
 const pubsub = new PubSub();
 
 const server = new GraphQLServer({
-    typeDefs: './Schemas/schema.graphql',
+typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
     resolvers: {
         Query,
         Mutation,
@@ -28,7 +29,10 @@ const server = new GraphQLServer({
         db,
         pubsub 
     },
+    enableLogging: true
 });
+
+server.enableLogging = true; 
 
 mongoose.connect(MONGODB_CONNECTION_URI, {
     useNewUrlParser: true, 

@@ -20,6 +20,7 @@ type Mutation {
 type Subscription {
     comment(tweetId: ID!): CommentSubscriptionPayload! 
     tweet: TweetSubscriptionPayload!
+    user: UserSubscriptionPayload! 
 }
 
 type User {
@@ -60,7 +61,7 @@ input CreateUserInput {
     lastName: String! 
     email: String! 
     age: Int 
-    
+
 }
 
 
@@ -98,4 +99,9 @@ type TweetSubscriptionPayload {
 type CommentSubscriptionPayload {
     mutation: MutationType! 
     data: Comment!
+}
+
+type UserSubscriptionPayload {
+    mutation: MutationType!
+    data: User! 
 }

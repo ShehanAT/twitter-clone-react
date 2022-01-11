@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { User } from '../database/models.js';
+// import { GraphQLServerError  } from 'graphql-yoga';
+import pkg from 'graphql-yoga';
+const { GraphQLServerError  } = pkg;
 
 const Mutation = {
     async createUser(parent, args, { db }, info){
@@ -20,7 +23,7 @@ const Mutation = {
             
             return { ...result._doc, password: null, _id: result.id }
         }catch(err){
-            throw err;
+            throw new GraphQLServerError("Ran into GraphQL Server error!");
         }
     },
     deleteUser(parent, args, { db }, info){
