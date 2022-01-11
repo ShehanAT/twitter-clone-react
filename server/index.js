@@ -6,6 +6,7 @@ import User from "./resolvers/User.js";
 import Tweet from "./resolvers/Tweet.js";
 import Comment from "./resolvers/Comment.js";
 import { GraphQLServer, PubSub } from 'graphql-yoga';
+import { User as MongooseUser } from "./database/models.js";
 
 const pubsub = new PubSub();
 
