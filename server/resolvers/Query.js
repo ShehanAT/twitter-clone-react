@@ -1,4 +1,4 @@
-
+import { User } from '../database/models.js';
 
 const Query = {
     users(parents, args, { db }, info) {
@@ -24,9 +24,11 @@ const Query = {
             return isTitleMatch || isBodyMatch;
         });
     },
-    usersAndTweets(parent, args, { db }, info){
+    async usersAndTweets(parent, args, { db }, info){
         if(!args.query){
-            return {users: db.users, tweets: db.tweets}
+            // const userFilter = {};
+            const dbUsers = await User.find();
+            return {users: dbUsers, tweets: db.tweets}
         }
     },
     comments(parent, args, { db }, info){
