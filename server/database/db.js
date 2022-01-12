@@ -4,6 +4,7 @@ const users = [
       firstName: 'Andrew',
       lastName: 'Obama',
       email: 'andrew@example.com',
+      password: '2342adfawewoi2u34',
       age: 27,
     },
     {
@@ -11,12 +12,16 @@ const users = [
       firstName: 'Hannah',
       lastName: 'Schweinstagger',
       email: 'sarah@example.com',
+      password: '2342adfawasdfawe3223',
+      age: 23
     },
     {
       id: '3',
       firstName: 'Micheal',
       lastName: 'Borgia',
       email: 'mike@example.com',
+      password: '234aedfasdfwe5674yp',
+      age: 23
     },
   ];
   

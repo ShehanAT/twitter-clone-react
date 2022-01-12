@@ -6,7 +6,6 @@ import User from "./resolvers/User.js";
 import Tweet from "./resolvers/Tweet.js";
 import Comment from "./resolvers/Comment.js";
 import { GraphQLServer, PubSub } from 'graphql-yoga';
-import { User as MongooseUser } from "./database/models.js";
 import mongoose from "mongoose";
 import path from "path";
 import { MONGODB_CONNECTION_URI } from "./config/environment.js";
@@ -16,7 +15,7 @@ const __dirname = path.resolve();
 const pubsub = new PubSub();
 
 const server = new GraphQLServer({
-typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
+typeDefs: `${__dirname}/Schemas/schema.graphql`,
     resolvers: {
         Query,
         Mutation,
@@ -29,10 +28,8 @@ typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
         db,
         pubsub 
     },
-    enableLogging: true
 });
 
-server.enableLogging = true; 
 
 mongoose.connect(MONGODB_CONNECTION_URI, {
     useNewUrlParser: true, 

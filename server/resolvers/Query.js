@@ -7,6 +7,7 @@ const Query = {
         }
 
         return db.users.filter((user) => {
+            console.log(user.name);
             return user.name.toLowerCase().includes(args.query.toLowerCase());
         });
     },
@@ -16,11 +17,17 @@ const Query = {
         }
 
         return db.tweets.filter((tweet) => {
+            console.log(tweet);
             const isTitleMatch = tweet.title.toLowerCase().includes(args.query.toLowerCase());
             const isBodyMatch = tweet.body.toLowerCase().includes(args.query.toLowerCase());
             
             return isTitleMatch || isBodyMatch;
         });
+    },
+    usersAndTweets(parent, args, { db }, info){
+        if(!args.query){
+            return {users: db.users, tweets: db.tweets}
+        }
     },
     comments(parent, args, { db }, info){
         

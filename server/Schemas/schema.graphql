@@ -1,6 +1,7 @@
 type Query {
     users(query: String): [User!]!
     tweets(query: String): [Tweet!]!
+    usersAndTweets(query: String): UsersAndTweets 
     comments: [Comment!]!
     me: User!
     tweet: Tweet! 
@@ -29,8 +30,9 @@ type User {
     lastName: String!
     email: String!
     age: Int 
-    tweets: [Tweet!]!
-    comments: [Comment!]!
+    password: String 
+    tweets: [Tweet]
+    comments: [Comment]
 }
 
 type Tweet {
@@ -39,7 +41,7 @@ type Tweet {
     body: String!
     published: Boolean!
     author: User!
-    comments: [Comment!]!
+    comments: [Comment]!
 }
 
 type Comment {
@@ -47,6 +49,11 @@ type Comment {
     text: String!
     author: User!
     tweet: Tweet!
+}
+
+type UsersAndTweets {
+    users: [User]
+    tweets: [Tweet]
 }
 
 enum MutationType {
