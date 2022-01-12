@@ -11,7 +11,7 @@ import {
   Button 
 } from 'reactstrap';
 import classes from "./App.css";
-
+import { Route, Routes } from 'react-router-dom';
 import { 
   USERS_AND_TWEETS_QUERY,
   CREATE_TWEETS_MUTATION,
@@ -21,6 +21,9 @@ import {
 } from './components/graphql';
 import Tweet from "./components/tweet/index"
 import User from "./components/user/index"
+import Signup from "./components/signup/index";
+import Home from "./components/home/index";
+
 
 const App = () => {
   const [ tweetTitle, setTweetTitle ] = useState("");
@@ -100,7 +103,11 @@ const App = () => {
 
     return (
       <Container>
-        <Row>
+        <Routes>
+          <Route exact path="/signup" element={<Signup/>}></Route>
+          <Route path="/" element={<Home/>}></Route>
+        </Routes>
+        {/* <Row>
           <Col>
             <h1 className={classes.title}>Twitter Clone Application</h1>
           </Col>
@@ -196,7 +203,7 @@ const App = () => {
               )
             }
           </Col>
-        </Row>
+        </Row> */}
       </Container>
     )
 }
