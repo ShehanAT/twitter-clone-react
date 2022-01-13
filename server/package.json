@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1054.0",
+    "bcryptjs": "^2.4.3",
+    "brcypt": "^1.0.1",
     "crypto": "^1.0.1",
     "graphql-yoga": "^1.17.4",
     "mime": "^3.0.0",

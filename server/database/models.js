@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from "mongoose-paginate";
+import bcrypt from 'bcryptjs';
 
 var userSchema = new mongoose.Schema();
 var tweetSchema = new mongoose.Schema();
@@ -33,6 +34,7 @@ userSchema.add({
     ],
 
     password: String,
+    passwordSalt: String,
     passwordResetToken: String,
     passwordResetTokenExpires: Date, 
 });
@@ -48,11 +50,12 @@ userSchema.pre('save', function(next){
         if(err){
             return next(err);
         }
-        bcrypt.hash(user.password, salt, null, function(err, hash){
+        bcrypt.hash(user.password, salt, function(err, hash){
             if(err){
                 return next(err);
             }
             user.password = hash;
+            user.passwordSalt = salt;
             next();
         });
     });

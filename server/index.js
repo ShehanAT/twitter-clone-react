@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 const pubsub = new PubSub();
 
 const server = new GraphQLServer({
-typeDefs: `${__dirname}/Schemas/schema.graphql`,
+typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
     resolvers: {
         Query,
         Mutation,

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { User } from '../database/models.js';
 // import { GraphQLServerError  } from 'graphql-yoga';
 import pkg from 'graphql-yoga';
+
 const { GraphQLServerError  } = pkg;
 
 const Mutation = {
@@ -15,8 +16,11 @@ const Mutation = {
             // const hashedPassword = await bcrypt.hash(args.data.password, 12);
 
             const user = new User({
+                firstName: args.data.firstName,
+                lastName: args.data.lastName,
                 email: args.data.email,
-                password: '3rwejfsdlfjadfa'
+                password: args.data.password,
+                age: args.data.age,
             });
             
             const result = await user.save();
