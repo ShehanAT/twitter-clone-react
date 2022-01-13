@@ -1,5 +1,7 @@
 import { useState } from 'react';
- 
+import "./index.css";
+
+
 const Signup = () => {
  
   // States for registration
@@ -92,9 +94,10 @@ const Signup = () => {
         <input onChange={handlePassword} className="input"
           value={password} type="password" />
  
-        <button onClick={handleSubmit} className="btn" type="submit">
+        <button onClick={handleSubmit} className="btn btn-primary submit-btn" type="submit">
           Submit
         </button>
+
       </form>
     </div>
   );

@@ -36,13 +36,13 @@ const Navbar = () => {
             <Bars />
     
             <NavMenu>
-            <NavLink to='/' activeStyle>
+            <NavLink to='/'>
                 Home
             </NavLink>
-            <NavLink to='/signup' activeStyle>
+            <NavLink to='/signup'>
                 Sign Up
             </NavLink>
-            <NavLink to='/login' activeStyle>
+            <NavLink to='/login'>
                 Login
             </NavLink>
             {/* Second Nav */}

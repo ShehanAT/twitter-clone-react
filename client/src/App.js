@@ -103,8 +103,10 @@ const App = () => {
   );
 
     return (
+      <>
+      <Navbar />
       <Container>
-        <Navbar />
+       
         <Routes>
           <Route exact path="/signup" element={<Signup/>}></Route>
           <Route exact path="/login" element={<Login/>}></Route>
@@ -208,6 +210,7 @@ const App = () => {
           </Col>
         </Row> */}
       </Container>
+      </>
     )
 }
 

@@ -1,5 +1,5 @@
 nav {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     height: 50px;
@@ -23,15 +23,6 @@ nav {
     cursor: pointer;
 }
 
-.btn {
-    display: none;
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    padding: 5px;
-    color: #000;
-    font-size: 18px;
-}
 
 @media screen and (max-width: 500px){
     .list {
