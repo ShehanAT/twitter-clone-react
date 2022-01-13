@@ -32,7 +32,7 @@ const CREATE_USER_MUTATION = gql`
         $firstName: String! 
         $lastName: String!
         $email: String! 
-        $age: String!
+        $age: Int!
         $password: String! 
     ){
         createUser(

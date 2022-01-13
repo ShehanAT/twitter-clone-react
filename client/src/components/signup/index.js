@@ -1,46 +1,70 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 import "./index.css";
-
+import { 
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button 
+} from 'reactstrap';
+import { 
+  CREATE_USER_MUTATION,
+} from '../graphql'; 
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
  
   // States for registration
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [age, setAge] = useState(0);
  
   // States for checking the errors
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
+  const [submitted] = useState(false);
+  const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
+  const [passwordsNotMatchingErrorMessage, setPasswordsNotMatchingErrorMessage] = useState(false);
  
-  // Handling the name change
-  const handleName = (e) => {
-    setName(e.target.value);
-    setSubmitted(false);
-  };
- 
-  // Handling the email change
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setSubmitted(false);
-  };
- 
-  // Handling the password change
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    setSubmitted(false);
-  };
- 
-  // Handling the form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name === '' || email === '' || password === '') {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-    }
-  };
+  // useMutation() is the primary API for executing queries in an Apollo application
+  const [addUser] = useMutation(CREATE_USER_MUTATION);
+  
+  const navigate = useNavigate();
+
+  toast.configure();
+
+  const handleSignupFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (firstName === '' || lastName === '' || email === '' || password === '' || confirmPassword === '') {
+        setEmptyFieldsErrorMessage(true);
+        setPasswordsNotMatchingErrorMessage(false);
+      } 
+      else {
+        if(password != confirmPassword){
+          setPasswordsNotMatchingErrorMessage(true);
+          setEmptyFieldsErrorMessage(false);
+        }else{
+          addUser({
+            variables: {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              age: age,
+              password: password
+            }
+          });
+          toast("User Registration Successful");
+          navigate("/login");
+        }
+      } 
+    },
+    [addUser, firstName, lastName, email, password, confirmPassword, age],
+  );
  
   // Showing success message
   const successMessage = () => {
@@ -50,20 +74,40 @@ const Signup = () => {
         style={{
           display: submitted ? '' : 'none',
         }}>
-        <h1>User {name} successfully registered!!</h1>
+        <h1>User {firstName} {lastName} successfully registered!!</h1>
       </div>
     );
   };
  
   // Showing error message if error is true
-  const errorMessage = () => {
+  const showEmptyFieldsErrorMessage = () => {
     return (
       <div
         className="error"
         style={{
-          display: error ? '' : 'none',
+          display: emptyFieldsErrorMessage ? '' : 'none',
         }}>
-        <h1>Please enter all the fields</h1>
+        <h1 style=
+          {{
+            color: '#FF0000'
+          }}
+        >Please enter all the fields</h1>
+      </div>
+    );
+  };
+
+  const showPasswordsNotMatchingErrorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: passwordsNotMatchingErrorMessage ? '' : 'none',
+        }}>
+        <h1 style=
+          {{
+            color: '#FF0000'
+          }}
+        >Passwords do not match. Please try again...</h1>
       </div>
     );
   };
@@ -76,29 +120,54 @@ const Signup = () => {
  
       {/* Calling to the methods */}
       <div className="messages">
-        {errorMessage()}
+        {showEmptyFieldsErrorMessage()}
+        {showPasswordsNotMatchingErrorMessage()}
         {successMessage()}
       </div>
  
-      <form>
+      <Form onSubmit={handleSignupFormSubmit}>
         {/* Labels and inputs for form data */}
-        <label className="label">Name</label>
-        <input onChange={handleName} className="input"
-          value={name} type="text" />
- 
-        <label className="label">Email</label>
-        <input onChange={handleEmail} className="input"
-          value={email} type="email" />
- 
-        <label className="label">Password</label>
-        <input onChange={handlePassword} className="input"
-          value={password} type="password" />
- 
-        <button onClick={handleSubmit} className="btn btn-primary submit-btn" type="submit">
-          Submit
-        </button>
+        <FormGroup row>
+          <Label className="label">First Name</Label>
+          <Input onChange={(e) => setFirstName(e.target.value)} className="input"
+          value={firstName} type="text" />
+        </FormGroup>
 
-      </form>
+        <FormGroup row>
+          <Label className="label">Last Name</Label>
+          <Input onChange={(e) => setLastName(e.target.value)} className="input"
+          value={lastName} type="text" />
+        </FormGroup>
+
+        <FormGroup row>
+          <Label className="label">Email</Label>
+          <Input onChange={(e) => setEmail(e.target.value)} className="input"
+          value={email} type="email" />
+        </FormGroup> 
+        
+        <FormGroup row>
+          <Label className="label">Password</Label>
+          <Input onChange={(e) => setPassword(e.target.value)} className="input"
+            value={password} type="password" />
+        </FormGroup>
+
+        <FormGroup row>
+          <Label className="label">Confirm Password</Label>
+          <Input onChange={(e) => setConfirmPassword(e.target.value)} className="input"
+            value={confirmPassword} type="password" />
+        </FormGroup>
+
+        <FormGroup row>
+          <Label className="label">Age</Label>
+          <Input onChange={(e) => setAge(e.target.value)} className="input"
+            value={age} type="number" />
+        </FormGroup>
+
+        <Button onClick={handleSignupFormSubmit} className="btn btn-primary submit-btn" type="submit">
+          Submit
+        </Button>
+
+      </Form>
     </div>
   );
 }

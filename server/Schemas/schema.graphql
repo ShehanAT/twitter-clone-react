@@ -2,6 +2,7 @@ type Query {
     users(query: String): [User!]!
     tweets(query: String): [Tweet!]!
     usersAndTweets(query: String): UsersAndTweets 
+    login(query: UserLoginInput): User 
     comments: [Comment!]!
     me: User!
     tweet: Tweet! 
@@ -84,6 +85,11 @@ input CreateTweetInput {
     body: String! 
     published: Boolean! 
     author: ID!
+}
+
+input UserLoginInput {
+    email: String 
+    password: String 
 }
 
 input UpdateTweetInput {

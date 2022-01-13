@@ -45,7 +45,23 @@ const USERS_AND_TWEETS_QUERY = gql`
             }
         }
     }
+`;
 
-`
+const USER_LOGIN_QUERY = gql`
+    query Login($email: String!, $password: String!) {
+        login(
+            query: {
+                email: $email 
+                password: $password 
+            }
+        ) {
+            firstName 
+            lastName 
+            email 
+            age 
+        }
+    }
 
-export { TWEETS_QUERY, USERS_QUERY, USERS_AND_TWEETS_QUERY };
+`;
+
+export { TWEETS_QUERY, USERS_QUERY, USERS_AND_TWEETS_QUERY, USER_LOGIN_QUERY };

@@ -1,4 +1,18 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import { 
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    Button 
+  } from 'reactstrap';
+import { 
+    USER_LOGIN_QUERY
+} from '../graphql'; 
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
@@ -10,19 +24,11 @@ const Login = () => {
     // States for checking the errors
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
-      
-    // Handling the email change
-    const handleEmail = (e) => {
-      setEmail(e.target.value);
-      setSubmitted(false);
-    };
-   
-    // Handling the password change
-    const handlePassword = (e) => {
-      setPassword(e.target.value);
-      setSubmitted(false);
-    };
-   
+    
+    const { loginResult, refetch } = useQuery(USER_LOGIN_QUERY, { variables: { email: email, password: password }, enabled: false, refetchOnWindowFocus: false });
+
+    const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
+
     // Handling the form submission
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -34,6 +40,45 @@ const Login = () => {
       }
     };
    
+    const useLoginFormSubmit = (e) => { 
+        // useCallback(
+        // (e) => {
+          e.preventDefault();
+          if (email === '' || password === '') {
+            showEmptyFieldsErrorMessage(true);
+          } 
+          else {
+           
+            // login({
+            //     variables: {
+            //         email: email,
+            //         password: password
+            //     }
+            // });
+            // toast("User Registration Successful");
+            // navigate("/login");
+          } 
+        }
+        // [login, email, password],
+    // );
+
+      // Showing error message if error is true
+  const showEmptyFieldsErrorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: emptyFieldsErrorMessage ? '' : 'none',
+        }}>
+        <h1 style=
+          {{
+            color: '#FF0000'
+          }}
+        >Please enter all the fields</h1>
+      </div>
+    );
+  };  
+
     // Showing success message
     const successMessage = () => {
       return (
@@ -47,18 +92,10 @@ const Login = () => {
       );
     };
    
-    // Showing error message if error is true
-    const errorMessage = () => {
-      return (
-        <div
-          className="error"
-          style={{
-            display: error ? '' : 'none',
-          }}>
-          <h1>Invalid credentials! Please try again...</h1>
-        </div>
-      );
-    };
+    const handleLoginClick = () => {
+        console.log("passing handleLoginClick()");
+        refetch();
+    }
    
     return (
       <div className="form">
@@ -68,25 +105,29 @@ const Login = () => {
    
         {/* Calling to the methods */}
         <div className="messages">
-          {errorMessage()}
+          {showEmptyFieldsErrorMessage()}
           {successMessage()}
         </div>
    
-        <form>
-          {/* Labels and inputs for form data */}
-          <label className="label">Email</label>
-          <input onChange={handleEmail} className="input"
+        <Form onSubmit={useLoginFormSubmit}>
+        {/* Labels and inputs for form data */}
+            <FormGroup row>
+            <Label className="label">Email</Label>
+            <Input onChange={(e) => setEmail(e.target.value)} className="input"
             value={email} type="email" />
-   
-          <label className="label">Password</label>
-          <input onChange={handlePassword} className="input"
-            value={password} type="password" />
-   
-          <button onClick={handleSubmit} className="btn btn-primary submit-btn" type="submit">
+            </FormGroup> 
+            
+            <FormGroup row>
+            <Label className="label">Password</Label>
+            <Input onChange={(e) => setPassword(e.target.value)} className="input"
+                value={password} type="password" />
+            </FormGroup>
+
+            <Button onClick={handleLoginClick} className="btn btn-primary submit-btn" type="submit">
             Submit
-          </button>
-        </form>
-      </div>
+            </Button>
+        </Form>
+       </div>
     );
   }
   
