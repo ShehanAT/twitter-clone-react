@@ -1,6 +1,6 @@
 import { useState } from 'react';
  
-function Signup() {
+const Signup = () => {
  
   // States for registration
   const [name, setName] = useState('');

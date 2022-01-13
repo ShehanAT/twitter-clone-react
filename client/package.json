@@ -15,9 +15,11 @@
     "react": "^17.0.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^4.0.1",
     "reactstrap": "^8.8.1",
+    "styled-components": "^5.3.3",
     "subscriptions-transport-ws": "^0.9.18",
     "web-vitals": "^0.2.4"
   },

@@ -23,7 +23,8 @@ import Tweet from "./components/tweet/index"
 import User from "./components/user/index"
 import Signup from "./components/signup/index";
 import Home from "./components/home/index";
-
+import Navbar from "./components/navbar/index";
+import Login from "./components/login/index";
 
 const App = () => {
   const [ tweetTitle, setTweetTitle ] = useState("");
@@ -103,8 +104,10 @@ const App = () => {
 
     return (
       <Container>
+        <Navbar />
         <Routes>
           <Route exact path="/signup" element={<Signup/>}></Route>
+          <Route exact path="/login" element={<Login/>}></Route>
           <Route path="/" element={<Home/>}></Route>
         </Routes>
         {/* <Row>
