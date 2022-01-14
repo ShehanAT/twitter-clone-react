@@ -9,10 +9,27 @@ import { GraphQLServer, PubSub } from 'graphql-yoga';
 import mongoose from "mongoose";
 import path from "path";
 import { MONGODB_CONNECTION_URI } from "./config/environment.js";
-// import path from 'path';
+import { GraphQLScalarType, Kind } from "graphql";
 const __dirname = path.resolve();
 
 const pubsub = new PubSub();
+
+const bigIntScalar = new GraphQLScalarType({
+    name: "BigInt",
+    description: "Big Integer type for represents integers larger than 32-bits",
+    serialize(value){
+        return value; // Convert outgoing BigInt to integer for JSON 
+    },
+    parseValue(value){
+        return new BigInt(value) // Convert incoming integer to BigInt
+    },
+    parseLiteral(ast){
+        if(ast.kind === Kind.INT){
+            return new BigInt(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to BigInt 
+        }
+        return null; // Invalid hard-coded value (not an integer)
+    }
+});
 
 const server = new GraphQLServer({
 typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
@@ -22,7 +39,8 @@ typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
         Subscription,
         User, 
         Tweet,
-        Comment 
+        Comment,
+        BigInt: bigIntScalar
     },
     context: {
         db,

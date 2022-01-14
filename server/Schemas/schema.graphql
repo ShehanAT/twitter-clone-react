@@ -124,7 +124,7 @@ type UserSubscriptionPayload {
 }
 
 type LoginResponse {
-    userId: GraphQLLong 
+    userId: BigInt 
     userFirstName: String 
     token: String 
     tokenExpiration: Int
