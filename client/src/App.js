@@ -25,6 +25,12 @@ import Signup from "./components/signup/index";
 import Home from "./components/home/index";
 import Navbar from "./components/navbar/index";
 import Login from "./components/login/index";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+export const apolloClient = new ApolloClient({
+  uri: "http://localhost:8080",
+  cache: new InMemoryCache(),
+});
 
 const App = () => {
   const [ tweetTitle, setTweetTitle ] = useState("");
@@ -109,7 +115,7 @@ const App = () => {
        
         <Routes>
           <Route exact path="/signup" element={<Signup/>}></Route>
-          <Route exact path="/login" element={<Login/>}></Route>
+          <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
           <Route path="/" element={<Home/>}></Route>
         </Routes>
         {/* <Row>

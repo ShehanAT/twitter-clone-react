@@ -37,6 +37,23 @@ userSchema.add({
     passwordSalt: String,
     passwordResetToken: String,
     passwordResetTokenExpires: Date, 
+
+    // tryLogin: {
+    //     validator: () => {
+    //         bcrypt.hash(inputtedPassword, passwordSalt, function(err, hash){
+    //             if(err){
+    //                 return next(err);
+    //             }
+    
+    //             if(hash == foundUser.password){
+    //                 next();
+    //             }else{
+    //                 throw new Error("Invalid Password! Please try again...");
+    //                 // return next(Error("Invalid Password! Please try again..."));
+    //             }
+    //         });
+    //     }
+    // }
 });
 
 
@@ -60,6 +77,25 @@ userSchema.pre('save', function(next){
         });
     });
 });
+
+userSchema.methods.comparePassword = function(inputtedPassword, currentPassword, callback){
+    bcrypt.hash(inputtedPassword, this.passwordSalt, function(err, hash){
+        if(err){
+            return callback(err);
+        }
+        const inputtedHash = hash;
+        bcrypt.compare(inputtedPassword, currentPassword, function(error, isMatch){
+            if(error) return callback(err);
+            callback(null, isMatch);
+        });
+        // if(hash == this.password){
+        //     callback();
+        // }else{
+        //     return callback(new Error("Invalid Password! Please try again..."));
+        // }
+    });
+};
+
 // mongoose schemas allows for pre-packaged plugins to extend their functionalities
 // mongoose-paginate is used to paginate the response received from any data source 
 userSchema.plugin(mongoosePaginate)

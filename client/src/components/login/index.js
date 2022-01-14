@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { 
     Form,
@@ -13,6 +13,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apolloClient } from '../../App';
+
+
 
 
 const Login = () => {
@@ -25,9 +28,17 @@ const Login = () => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
     
-    const { loginResult, refetch } = useQuery(USER_LOGIN_QUERY, { variables: { email: email, password: password }, enabled: false, refetchOnWindowFocus: false });
+    const [ skipLoginQuery, setSkipLoginQuery ] = useState(false)
+    // const { loginResult, refetch } = useQuery(USER_LOGIN_QUERY, { variables: { email: email, password: password }, skipLoginQuery, enabled: false, refetchOnWindowFocus: false });
+    
 
     const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
+
+    // useEffect(() => {
+    //   if(!loginResult){
+    //     setSkipLoginQuery(true);
+    //   }
+    // }, [loginResult]);
 
     // Handling the form submission
     const handleSubmit = (e) => {
@@ -92,10 +103,26 @@ const Login = () => {
       );
     };
    
-    const handleLoginClick = () => {
-        console.log("passing handleLoginClick()");
-        refetch();
+    const handleLoginClick = async () => {
+      const loginResult = await apolloClient.query({
+        query: USER_LOGIN_QUERY,
+        variables: { email: email, password: password },
+      });
+
+      console.log("passing handleLoginClick()");
+        // refetch();
     }
+
+    // const handleEmailInputChange = () => {
+    //   console.log("email: " + this.refs.email.value);
+    //   // if(skipLoginQuery){
+        
+    //   // }
+    // }
+
+    // const handlePasswordInputChange = () => {
+    //   console.log("password: " + this.refs.password.value);
+    // }
    
     return (
       <div className="form">
@@ -108,19 +135,21 @@ const Login = () => {
           {showEmptyFieldsErrorMessage()}
           {successMessage()}
         </div>
-   
-        <Form onSubmit={useLoginFormSubmit}>
+   {/* onSubmit={useLoginFormSubmit} */}
+        <Form >
         {/* Labels and inputs for form data */}
             <FormGroup row>
             <Label className="label">Email</Label>
-            <Input onChange={(e) => setEmail(e.target.value)} className="input"
-            value={email} type="email" />
+            {/*  */}
+            <Input  className="input"
+             type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
             </FormGroup> 
             
             <FormGroup row>
             <Label className="label">Password</Label>
-            <Input onChange={(e) => setPassword(e.target.value)} className="input"
-                value={password} type="password" />
+            {/*  */}
+            <Input  className="input"
+                 type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
             </FormGroup>
 
             <Button onClick={handleLoginClick} className="btn btn-primary submit-btn" type="submit">

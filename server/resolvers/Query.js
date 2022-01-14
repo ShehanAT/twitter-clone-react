@@ -49,19 +49,24 @@ const Query = {
 
         const passwordSalt = foundUser.passwordSalt;
         const inputtedPassword = args.query.password;
-      
-        bcrypt.hash(inputtedPassword, passwordSalt, function(err, hash){
-            if(err){
-                return next(err);
-            }
+        const currentPassword = foundUser.password;
 
-            if(hash == foundUser.password){
-                next();
-            }else{
-                throw new Error("Invalid Password! Please try again...");
-                // return next(Error("Invalid Password! Please try again..."));
-            }
+        foundUser.comparePassword(inputtedPassword, currentPassword, (error, isMatch) => {
+            if(error) throw new Error("Invalid Password! Please try again...");
+            console.log("Password isMatch: " + isMatch);
         });
+        // bcrypt.hash(inputtedPassword, passwordSalt, function(err, hash){
+        //     if(err){
+        //         return next(err);
+        //     }
+
+        //     if(hash == foundUser.password){
+        //         next();
+        //     }else{
+        //         throw new Error("Invalid Password! Please try again...");
+        //         // return next(Error("Invalid Password! Please try again..."));
+        //     }
+        // });
 
     },
     comments(parent, args, { db }, info){
