@@ -29,7 +29,6 @@ const Query = {
     },
     async usersAndTweets(parent, args, { db }, info){
         if(!args.query){
-            // const userFilter = {};
             const dbUsers = await User.find();
             return {users: dbUsers, tweets: db.tweets}
         }
@@ -37,18 +36,14 @@ const Query = {
     async login(parent, args, { db }, info){
         if(!args.query.email){
             throw new Error("Login credentials cannot be empty!");
-            // throw new UserInputError("Login credentials cannot be empty!");
         }
         const dbUser = await User.find({ email: args.query.email });
         let foundUser = null;
         if(dbUser.length == 0){
             throw new Error(`User with email: ${args.query.email} not found in database!`);
-            // return `User with email: ${args.query.email} not found in database!`;
         }else{
             foundUser = dbUser[0];
         }
-
-        const passwordSalt = foundUser.passwordSalt;
         const inputtedPassword = args.query.password;
         const currentPassword = foundUser.password;
 
@@ -63,36 +58,6 @@ const Query = {
         }else{
             throw new Error("Invalid Password! Please try again...");
         }
-
-        // const loginResult = await foundUser.comparePassword(inputtedPassword, currentPassword, async (error, isMatch) => {
-        //     if(error) throw new Error("Invalid Password! Please try again...");
-        //     console.log("Password isMatch: " + isMatch);
-        //     if(isMatch){
-        //         const jwtToken = jwt.sign({
-        //             email: args.query.email, password: currentPassword
-        //         }, "secret");
-        //         // return jwtToken;
-        //         // return "Password matched!";
-        //         return true;
-        //     }else{
-        //         // return "Invalid Password! Please try again...";
-        //         return false;
-        //     }
-        // });
-        console.log(loginResult);
-        // bcrypt.hash(inputtedPassword, passwordSalt, function(err, hash){
-        //     if(err){
-        //         return next(err);
-        //     }
-
-        //     if(hash == foundUser.password){
-        //         next();
-        //     }else{
-        //         throw new Error("Invalid Password! Please try again...");
-        //         // return next(Error("Invalid Password! Please try again..."));
-        //     }
-        // });
-
     },
     comments(parent, args, { db }, info){
         

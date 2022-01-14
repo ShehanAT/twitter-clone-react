@@ -45,7 +45,7 @@ const Signup = () => {
         setPasswordsNotMatchingErrorMessage(false);
       } 
       else {
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
           setPasswordsNotMatchingErrorMessage(true);
           setEmptyFieldsErrorMessage(false);
         }else{

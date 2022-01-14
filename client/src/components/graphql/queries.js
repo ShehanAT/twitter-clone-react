@@ -55,10 +55,10 @@ const USER_LOGIN_QUERY = gql`
                 password: $password 
             }
         ) {
-            firstName 
-            lastName 
-            email 
-            age 
+            userId 
+            userFirstName
+            token 
+            tokenExpiration
         }
     }
 
