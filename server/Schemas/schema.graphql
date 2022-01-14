@@ -1,8 +1,11 @@
+
+scalar BigInt
+
 type Query {
     users(query: String): [User!]!
     tweets(query: String): [Tweet!]!
     usersAndTweets(query: String): UsersAndTweets 
-    login(query: UserLoginInput): User 
+    login(query: UserLoginInput): LoginResponse 
     comments: [Comment!]!
     me: User!
     tweet: Tweet! 
@@ -118,4 +121,11 @@ type CommentSubscriptionPayload {
 type UserSubscriptionPayload {
     mutation: MutationType!
     data: User! 
+}
+
+type LoginResponse {
+    userId: GraphQLLong 
+    userFirstName: String 
+    token: String 
+    tokenExpiration: Int
 }

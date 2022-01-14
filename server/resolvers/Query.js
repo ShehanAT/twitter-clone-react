@@ -1,6 +1,7 @@
 import { User } from '../database/models.js';
+import jwt from "jsonwebtoken";
 import bcrypt from 'bcryptjs';
-import { UserInputError, ApolloError } from 'apollo-server';
+
 
 const Query = {
     users(parents, args, { db }, info) {
@@ -51,10 +52,34 @@ const Query = {
         const inputtedPassword = args.query.password;
         const currentPassword = foundUser.password;
 
-        foundUser.comparePassword(inputtedPassword, currentPassword, (error, isMatch) => {
-            if(error) throw new Error("Invalid Password! Please try again...");
-            console.log("Password isMatch: " + isMatch);
-        });
+        const loginResult = await bcrypt.compare(inputtedPassword, currentPassword);
+        if(loginResult){
+            const jwtToken = jwt.sign({
+                userId: foundUser.id,
+                email: args.query.email, 
+                password: currentPassword
+                }, "secret");
+            return { userId: foundUser._id, userFirstName: foundUser.firstName, token: jwtToken, tokenExpiration: 1 };
+        }else{
+            throw new Error("Invalid Password! Please try again...");
+        }
+
+        // const loginResult = await foundUser.comparePassword(inputtedPassword, currentPassword, async (error, isMatch) => {
+        //     if(error) throw new Error("Invalid Password! Please try again...");
+        //     console.log("Password isMatch: " + isMatch);
+        //     if(isMatch){
+        //         const jwtToken = jwt.sign({
+        //             email: args.query.email, password: currentPassword
+        //         }, "secret");
+        //         // return jwtToken;
+        //         // return "Password matched!";
+        //         return true;
+        //     }else{
+        //         // return "Invalid Password! Please try again...";
+        //         return false;
+        //     }
+        // });
+        console.log(loginResult);
         // bcrypt.hash(inputtedPassword, passwordSalt, function(err, hash){
         //     if(err){
         //         return next(err);

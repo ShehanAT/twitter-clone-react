@@ -78,7 +78,7 @@ userSchema.pre('save', function(next){
     });
 });
 
-userSchema.methods.comparePassword = function(inputtedPassword, currentPassword, callback){
+userSchema.methods.comparePassword = async function(inputtedPassword, currentPassword, callback){
     bcrypt.hash(inputtedPassword, this.passwordSalt, function(err, hash){
         if(err){
             return callback(err);
@@ -86,7 +86,7 @@ userSchema.methods.comparePassword = function(inputtedPassword, currentPassword,
         const inputtedHash = hash;
         bcrypt.compare(inputtedPassword, currentPassword, function(error, isMatch){
             if(error) return callback(err);
-            callback(null, isMatch);
+            return callback(null, isMatch);
         });
         // if(hash == this.password){
         //     callback();
