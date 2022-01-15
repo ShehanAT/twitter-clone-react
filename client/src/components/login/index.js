@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 
 
 
-const Login = ( props ) => {
+const Login = () => {
  
     // States for registration
     const [email, setEmail] = useState('');
@@ -73,9 +73,10 @@ const Login = ( props ) => {
         sessionStorage.setItem("jwtToken", jwtToken);
         sessionStorage.setItem("loggedInUserFirstName", userFirstName);
 
-        props.handleLogin(true);
         toast("Welcome " + userFirstName);
         navigate("/");
+        window.location.reload(false);
+
       }
       console.log(loginResult);
     }

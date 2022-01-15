@@ -10,23 +10,17 @@ import {
 const Navbar = ({ isLoggedIn }) => {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(isLoggedIn);
 
- 
-  
-
-    let registerTab = <NavLink to='/signup'>Sign Up</NavLink>;
-    let loginTab = <NavLink to='/login'>Login</NavLink>;
-    let logoutTab = <NavLink to="/" onClick={() => handleLogout()}>Logout</NavLink>;
     // console.log("isLoggedIn: " + isLoggedIn);
 
     useEffect(() => {
         const savedJwtToken = sessionStorage.getItem("jwtToken") 
         const loggedInUserFirstName = sessionStorage.getItem("loggedInUserFirstName");
-        if(savedJwtToken && loggedInUserFirstName && savedJwtToken !== "null" && loggedInUserFirstName !== "null"){
-            setIsUserLoggedIn(true);
-        }
-        console.log(savedJwtToken);
-        console.log(loggedInUserFirstName);
-
+        // if(savedJwtToken && loggedInUserFirstName && savedJwtToken !== "null" && loggedInUserFirstName !== "null"){
+        //     setIsUserLoggedIn(true);
+        // }
+        // console.log(savedJwtToken);
+        // console.log(loggedInUserFirstName);
+        // if()
         // if(isLoggedIn){
         //     logoutTab = <NavLink to="/" onClick={() => handleLogout()} >Logout</NavLink>
         // }else{
@@ -41,6 +35,7 @@ const Navbar = ({ isLoggedIn }) => {
         sessionStorage.removeItem("jwtToken");
         sessionStorage.removeItem("loggedInUserFirstName");
         console.log("isLoggedIn: " + isLoggedIn);
+        window.location.reload(false);
     };
 
     return (        
@@ -51,9 +46,19 @@ const Navbar = ({ isLoggedIn }) => {
                 <NavLink to='/'>
                     Home
                 </NavLink>
-                { !isLoggedIn && registerTab } 
+                { sessionStorage.getItem("jwtToken") && sessionStorage.getItem("loggedInUserFirstName") ? 
+                    <div>
+                        <NavLink to="/" onClick={() => handleLogout()}>Logout</NavLink>
+                    </div>
+                : 
+                    <div>
+                        <NavLink to='/signup'>Sign Up</NavLink> 
+                        <NavLink to='/login'>Login</NavLink>
+                    </div>
+                }
+                {/* { !isLoggedIn && registerTab } 
                 { !isLoggedIn && loginTab }
-                { isLoggedIn && logoutTab }
+                { isLoggedIn && logoutTab } */}
             </NavMenu>
         </Nav>
         </>
