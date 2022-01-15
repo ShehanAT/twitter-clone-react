@@ -56,9 +56,7 @@ function Home() {
       } catch(e) {}
     });
   
-    // useCallback() returns a memoized callback. Memoization is an optimization technique used primarily to speed up computer programs by storing the results for expensive function calls and returning the cached result when the same inputs occur again.
-    // useCallback() also returns the same function instance between renderings(aka memoization)
-    // as long as addTweet, tweetTitle and tweetBody variable values are the same, useCallback() does not submit the form. If one or more of the values change then the form is submitted
+   
     const handleFormSubmit = useCallback(
       (e) => {
         e.preventDefault();

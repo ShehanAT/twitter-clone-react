@@ -11,11 +11,12 @@ import {
 } from '../graphql'; 
 import 'react-toastify/dist/ReactToastify.css';
 import { apolloClient } from '../../App';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
-
-const Login = () => {
+const Login = ( props ) => {
  
     // States for registration
     const [email, setEmail] = useState('');
@@ -26,23 +27,24 @@ const Login = () => {
     
     const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
 
+    const navigate = useNavigate();
 
     // Showing error message if error is true
-  const showEmptyFieldsErrorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: emptyFieldsErrorMessage ? '' : 'none',
-        }}>
-        <h1 style=
-          {{
-            color: '#FF0000'
-          }}
-        >Please enter all the fields</h1>
-      </div>
-    );
-  };  
+    const showEmptyFieldsErrorMessage = () => {
+      return (
+        <div
+          className="error"
+          style={{
+            display: emptyFieldsErrorMessage ? '' : 'none',
+          }}>
+          <h1 style=
+            {{
+              color: '#FF0000'
+            }}
+          >Please enter all the fields</h1>
+        </div>
+      );
+    };  
 
     // Showing success message
     const successMessage = () => {
@@ -64,6 +66,17 @@ const Login = () => {
         variables: { email: email, password: password },
       });
       console.log("LoginResult: \n");
+      if(loginResult && loginResult.data && loginResult.data.login){
+        const jwtToken = loginResult.data.login.token;
+        const userFirstName = loginResult.data.login.userFirstName;
+
+        sessionStorage.setItem("jwtToken", jwtToken);
+        sessionStorage.setItem("loggedInUserFirstName", userFirstName);
+
+        props.handleLogin(true);
+        toast("Welcome " + userFirstName);
+        navigate("/");
+      }
       console.log(loginResult);
     }
 
