@@ -41,8 +41,6 @@ function Home() {
         subscribeToMore({
           document: TWEETS_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
-            console.log(subscriptionData);
-            console.log(prev);
             if(!subscriptionData.data) return prev;
             const newPost = subscriptionData.data.tweet.data;
   

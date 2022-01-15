@@ -65,7 +65,6 @@ const Login = () => {
         query: USER_LOGIN_QUERY,
         variables: { email: email, password: password },
       });
-      console.log("LoginResult: \n");
       if(loginResult && loginResult.data && loginResult.data.login){
         const jwtToken = loginResult.data.login.token;
         const userFirstName = loginResult.data.login.userFirstName;
@@ -78,7 +77,6 @@ const Login = () => {
         window.location.reload(false);
 
       }
-      console.log(loginResult);
     }
 
     return (
