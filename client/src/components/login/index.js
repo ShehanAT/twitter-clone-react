@@ -68,10 +68,12 @@ const Login = () => {
       if(loginResult && loginResult.data && loginResult.data.login){
         const jwtToken = loginResult.data.login.token;
         const userFirstName = loginResult.data.login.userFirstName;
+        const userId = loginResult.data.login.userId;
 
         sessionStorage.setItem("jwtToken", jwtToken);
         sessionStorage.setItem("loggedInUserFirstName", userFirstName);
-
+        sessionStorage.setItem("loggedInUserId", userId);
+        
         toast("Welcome " + userFirstName);
         navigate("/");
         window.location.reload(false);

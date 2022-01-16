@@ -15,7 +15,7 @@ type Mutation {
     createUser(data: CreateUserInput!): User! 
     updateUser(data: UpdateUserInput!): User
     deleteUser(id: ID!): User! 
-    createTweet(data: CreateTweetInput!): Tweet! 
+    createTweet(data: CreateTweetInput!): Tweet
     updateTweet(data: UpdateTweetInput!): User 
     deleteTweet(id: ID!): Tweet!
     createComment(data: CreateCommentInput!): Tweet!
@@ -41,11 +41,11 @@ type User {
 
 type Tweet {
     id: ID!
-    title: String!
-    body: String!
-    published: Boolean!
-    author: User!
-    comments: [Comment]!
+    title: String
+    body: String
+    published: Boolean
+    author: User
+    comments: [Comment]
 }
 
 type Comment {
@@ -84,10 +84,10 @@ input UpdateUserInput {
 }
 
 input CreateTweetInput {
-    title: String! 
-    body: String! 
-    published: Boolean! 
-    author: ID!
+    title: String 
+    body: String 
+    published: Boolean
+    author: ID
 }
 
 input UserLoginInput {

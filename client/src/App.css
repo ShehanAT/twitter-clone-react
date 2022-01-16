@@ -4,6 +4,10 @@
   color: rgb(37, 37, 37);
 }
 
+.centerTitle {
+  text-align: center;
+}
+
 .form {
   padding: 40px;
 }

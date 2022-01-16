@@ -2,10 +2,10 @@ import { gql } from "@apollo/client";
 
 const CREATE_TWEETS_MUTATION = gql`
     mutation createTweet(
-        $title: String!
-        $body: String!
-        $published: Boolean! 
-        $authorId: ID!
+        $title: String
+        $body: String
+        $published: Boolean 
+        $authorId: ID
     ){
         createTweet(
             data: {

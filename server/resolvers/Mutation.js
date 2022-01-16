@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '../database/models.js';
+import { User, Tweet } from '../database/models.js';
 // import { GraphQLServerError  } from 'graphql-yoga';
 import pkg from 'graphql-yoga';
 
@@ -88,32 +88,50 @@ const Mutation = {
 
         return user;
     },
-    createTweet(parent, args, { db, pubsub }, info){
-        const userExists = db.users.some((user) => user.id === args.data.author);
+    async createTweet(parent, args, { db, pubsub }, info){
+        if(args.data.author){
+            const foundUser = await User.findById(args.data.author);
 
-        if(!userExists){
-            throw new Error("User not found!");
-        }
-
-        const tweet = {
-            id: uuidv4(),
-            ...args.data 
-        }
-
-        if(args.data.published){
-            // if published == True then use pubsub to publish tweet 
-
-            // PubSub is a class that exposes a simple Publish and subscribe API. It sits between your application's logic and the GraphQL subscription engine - it 
-            // receives a publish command from your app logic and pushes it to your GraphQL execution engine
-            pubsub.publish('tweet', {
-                tweet: {
-                    mutation: 'CREATED',
-                    data: tweet,
-                },
+            if(!foundUser){
+                throw new Error("Posting user not found!");
+            }
+            
+            const newTweet = new Tweet({
+                title: args.data.title,
+                body: args.data.body,
+                published: args.data.published,
+                author: foundUser,
+                comments: []
             });
+            
+            if(args.data.published){
+
+                // if published == True then use mongoose to save the tweet to MongoDB
+                
+                const newTweetResult = await newTweet.save();
+            
+                
+                // PubSub is a class that exposes a simple Publish and subscribe API. It sits between your application's logic and the GraphQL subscription engine - it 
+                // receives a publish command from your app logic and pushes it to your GraphQL execution engine
+                pubsub.publish('tweet', {
+                    tweet: {
+                        mutation: 'CREATED',
+                        data: newTweet,
+                    },
+                });
+
+                return { ...newTweetResult._doc }
+                // return { newTweet }
+            }else{
+                throw new Error("Set Tweet.published to 'true' in order to publish the tweet!")
+            }
+        }else {
+            throw new Error("Posting user not provided!");
         }
 
-        return tweet;
+    
+
+   
     },
     deleteTweet(parent, args, { db, pubsub }, info){
         // args is a Tweet instance, in this case
