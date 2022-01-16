@@ -14,6 +14,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { GRAPHQL_HTTP_SERVER_URL, GRAPHQL_WS_SERVER_URL } from './environment';
+import redux from "./redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 
 // Creating a HTTP link 
 const httpLink = new HttpLink({
@@ -49,9 +52,13 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ApolloProvider client={client}>
-        <App/>
+     <Provider store={redux.store}>
+      <ApolloProvider client={client} >
+        <PersistGate loading={null} persistor={redux.persistor}>
+          <App/>
+        </PersistGate>
       </ApolloProvider>
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>
   ,

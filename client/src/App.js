@@ -7,6 +7,7 @@ import Signup from "./components/signup/index";
 import Home from "./components/home/index";
 import Navbar from "./components/navbar/index";
 import Login from "./components/login/index";
+import Explore from "./components/explore/index";
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 export const apolloClient = new ApolloClient({
@@ -25,7 +26,9 @@ const App = () => {
         <Routes>
           <Route exact path="/signup" element={<Signup/>}></Route>
           <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
+          <Route exact path="/explore" element={<Explore/>}/>
           <Route path="/" element={<Home/>}></Route>
+
         </Routes>
       </Container>
       </>
