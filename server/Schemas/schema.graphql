@@ -3,7 +3,7 @@ scalar BigInt
 
 type Query {
     users(query: String): [User!]!
-    tweets(query: String): [Tweet!]!
+    tweets(query: String): [TweetWithID]
     usersAndTweets(query: String): UsersAndTweets 
     login(query: UserLoginInput): LoginResponse 
     comments: [Comment!]!
@@ -67,7 +67,11 @@ type Comment {
 
 type UsersAndTweets {
     users: [User]
-    tweets: [Tweet]
+    tweets: [TweetWithID]
+}
+
+type AllTweetsWithID {
+    tweets: [TweetWithID]
 }
 
 enum MutationType {

@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 
 const TWEETS_QUERY = gql`
     query {
+   
         tweets {
             title 
             body 

@@ -18,7 +18,7 @@ import {
   CREATE_USER_MUTATION,
   TWEETS_SUBSCRIPTION,
   GET_ALL_TWEETS_SUBSCRIPTION,
-
+  TWEETS_QUERY
 } from '../graphql'; 
 import Tweet from "../tweet/index";
 
@@ -27,7 +27,7 @@ function Home() {
     const [ tweetBody, setTweetBody ] = useState("");
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
-    const { loading, error, data, subscribeToMore } = useQuery(USERS_AND_TWEETS_QUERY);
+    const { loading, error, data, subscribeToMore } = useQuery(TWEETS_QUERY);
     const [ allTweets, setAllTweets ] = useState([]);
 
     // useMutation() is the primary API for executing queries in an Apollo application
@@ -41,17 +41,26 @@ function Home() {
           document: GET_ALL_TWEETS_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
             if(!subscriptionData.data) return prev;
-            setAllTweets(subscriptionData.data.getAllTweets.data);
+            // return subscriptionData.data.getAllTweets.data;
+
+            // setAllTweets(subscriptionData.data.getAllTweets.data);
+            // setUse
             // const newPost = subscriptionData.data.tweet.data;
             // console.log("prev");
             // console.log(prev);
-
+            console.log(subscriptionData.data);
+            console.log(prev);
+            // prev = subscriptionData.data.getAllTweets.data;
+            return { tweets: subscriptionData.data.getAllTweets.data }
+            // return ;
             // return {
-            //   ...prev,
-            //   tweets: [newPost, ...prev.usersAndTweets.tweets],
+              // ...prev,
+              // tweets: [subscriptionData.data.getAllTweets.data],
             // };
           },
         });
+        // console.log(subscriptionResult);
+        // data.usersAndTweets.tweets = subscriptionResult;
   
       } catch(e) {}
     });
@@ -137,12 +146,12 @@ function Home() {
             ) : error ? (
             <p>Error: </p>
             ) : (
-            data.usersAndTweets.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+            data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
             )
         }
-        {
+        {/* {
           allTweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-        }
+        } */}
         </Col>
     </Row>
   </Container>

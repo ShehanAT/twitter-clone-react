@@ -45,7 +45,7 @@ const GET_ALL_TWEETS_SUBSCRIPTION = gql`
                     firstName 
                     lastName 
                     email 
-                    
+
                 }
                 published 
             }

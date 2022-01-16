@@ -1,4 +1,4 @@
-import { User } from '../database/models.js';
+import { Tweet, User } from '../database/models.js';
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcryptjs';
 
@@ -14,23 +14,28 @@ const Query = {
             return user.name.toLowerCase().includes(args.query.toLowerCase());
         });
     },
-    tweets(parent, args, { db }, info){
-        if(!args.query){
-            return db.tweets;
-        }
+    async tweets(parent, args, { db }, info){
+        // if(!args.query){
+        //     return db.tweets;
+        // }
 
-        return db.tweets.filter((tweet) => {
-            console.log(tweet);
-            const isTitleMatch = tweet.title.toLowerCase().includes(args.query.toLowerCase());
-            const isBodyMatch = tweet.body.toLowerCase().includes(args.query.toLowerCase());
+        // return db.tweets.filter((tweet) => {
+        //     console.log(tweet);
+        //     const isTitleMatch = tweet.title.toLowerCase().includes(args.query.toLowerCase());
+        //     const isBodyMatch = tweet.body.toLowerCase().includes(args.query.toLowerCase());
             
-            return isTitleMatch || isBodyMatch;
-        });
+        //     return isTitleMatch || isBodyMatch;
+        // });
+
+        const dbTweets = await Tweet.find();
+        return dbTweets;
+        // return { tweets: dbTweets }
     },
     async usersAndTweets(parent, args, { db }, info){
         if(!args.query){
             const dbUsers = await User.find();
-            return {users: dbUsers, tweets: db.tweets}
+            const dbTweets = await Tweet.find();
+            return {users: dbUsers, tweets: dbTweets}
         }
     },
     async login(parent, args, { db }, info){
