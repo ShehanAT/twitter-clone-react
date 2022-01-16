@@ -25,6 +25,7 @@ type Mutation {
 type Subscription {
     comment(tweetId: ID!): CommentSubscriptionPayload! 
     tweet: TweetSubscriptionPayload!
+    getAllTweets: AllTweetsSubscriptionPayload!
     user: UserSubscriptionPayload! 
 }
 
@@ -46,6 +47,15 @@ type Tweet {
     published: Boolean
     author: User
     comments: [Comment]
+}
+
+type TweetWithID {
+    id: BigInt 
+    title: String 
+    body: String 
+    published: Boolean 
+    author: User 
+    comments: [ Comment ]
 }
 
 type Comment {
@@ -112,6 +122,11 @@ type TweetSubscriptionPayload {
     mutation: MutationType! 
     data: Tweet! 
 } 
+
+type AllTweetsSubscriptionPayload {
+    mutation: MutationType 
+    data: [TweetWithID]
+}
 
 type CommentSubscriptionPayload {
     mutation: MutationType! 

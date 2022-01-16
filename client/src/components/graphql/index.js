@@ -6,3 +6,4 @@ export { USER_LOGIN_QUERY } from './queries';
 export { USERS_AND_TWEETS_QUERY } from './queries';
 export { TWEETS_SUBSCRIPTION } from './subscriptions';
 export { USER_SUBSCRIPTION } from './subscriptions';
+export { GET_ALL_TWEETS_SUBSCRIPTION } from './subscriptions';

@@ -34,4 +34,24 @@ const USER_SUBSCRIPTION = gql`
 
 `
 
-export { TWEETS_SUBSCRIPTION, USER_SUBSCRIPTION };
+const GET_ALL_TWEETS_SUBSCRIPTION = gql`
+    subscription {
+        getAllTweets {
+            mutation
+            data { 
+                title 
+                body 
+                author {
+                    firstName 
+                    lastName 
+                    email 
+                    
+                }
+                published 
+            }
+        }
+    }
+
+`
+
+export { TWEETS_SUBSCRIPTION, USER_SUBSCRIPTION, GET_ALL_TWEETS_SUBSCRIPTION };

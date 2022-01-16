@@ -17,6 +17,7 @@ import {
   CREATE_TWEETS_MUTATION,
   CREATE_USER_MUTATION,
   TWEETS_SUBSCRIPTION,
+  GET_ALL_TWEETS_SUBSCRIPTION,
 
 } from '../graphql'; 
 import Tweet from "../tweet/index";
@@ -27,7 +28,8 @@ function Home() {
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
     const { loading, error, data, subscribeToMore } = useQuery(USERS_AND_TWEETS_QUERY);
-   
+    const [ allTweets, setAllTweets ] = useState([]);
+
     // useMutation() is the primary API for executing queries in an Apollo application
     const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
     const [addUser] = useMutation(CREATE_USER_MUTATION);
@@ -36,17 +38,18 @@ function Home() {
       try {
         // subscribeToMore() executes a subscription that pushes updates to the query's original result 
         subscribeToMore({
-          document: TWEETS_SUBSCRIPTION,
+          document: GET_ALL_TWEETS_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
             if(!subscriptionData.data) return prev;
-            const newPost = subscriptionData.data.tweet.data;
-            console.log("prev");
-            console.log(prev);
+            setAllTweets(subscriptionData.data.getAllTweets.data);
+            // const newPost = subscriptionData.data.tweet.data;
+            // console.log("prev");
+            // console.log(prev);
 
-            return {
-              ...prev,
-              tweets: [newPost, ...prev.usersAndTweets.tweets],
-            };
+            // return {
+            //   ...prev,
+            //   tweets: [newPost, ...prev.usersAndTweets.tweets],
+            // };
           },
         });
   
@@ -136,6 +139,9 @@ function Home() {
             ) : (
             data.usersAndTweets.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
             )
+        }
+        {
+          allTweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
         }
         </Col>
     </Row>

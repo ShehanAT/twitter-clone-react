@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { User, Tweet } from '../database/models.js';
 // import { GraphQLServerError  } from 'graphql-yoga';
 import pkg from 'graphql-yoga';
@@ -109,14 +108,15 @@ const Mutation = {
                 // if published == True then use mongoose to save the tweet to MongoDB
                 
                 const newTweetResult = await newTweet.save();
-            
+                
+                const allTweets = await Tweet.find();
                 
                 // PubSub is a class that exposes a simple Publish and subscribe API. It sits between your application's logic and the GraphQL subscription engine - it 
                 // receives a publish command from your app logic and pushes it to your GraphQL execution engine
-                pubsub.publish('tweet', {
-                    tweet: {
+                pubsub.publish('getAllTweets', {
+                    getAllTweets: {
                         mutation: 'CREATED',
-                        data: newTweet,
+                        data: allTweets,
                     },
                 });
 

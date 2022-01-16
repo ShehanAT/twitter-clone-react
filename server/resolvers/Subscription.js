@@ -4,6 +4,7 @@ are pushed from the server to subscribing clients. For example, a chat applicati
 all clients in a particular chat room 
 
 */
+
 const Subscription = {
     comment: {
         subscribe(parent, { tweetId }, { db, pubsub }, info){
@@ -21,6 +22,13 @@ const Subscription = {
     tweet: {
         subscribe(parent, args, { pubsub }, info){
             return pubsub.asyncIterator('tweet');
+        },
+    },
+    getAllTweets: {
+        async subscribe(parent, args, { pubsub }, info){
+            return pubsub.asyncIterator('getAllTweets');
+            // const allTweets = await Tweet.find();
+            // return allTweets;
         },
     },
     user: {
