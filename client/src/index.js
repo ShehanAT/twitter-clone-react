@@ -53,7 +53,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
      <Provider store={redux.store}>
-      <ApolloProvider client={client} >
+      <ApolloProvider client={client}>
         <PersistGate loading={null} persistor={redux.persistor}>
           <App/>
         </PersistGate>

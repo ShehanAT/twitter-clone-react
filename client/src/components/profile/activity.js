@@ -1,8 +1,6 @@
-
 import React, { useEffect, useCallback, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { 
-  Container,
   Row, 
   Col,
   Form,
@@ -18,14 +16,12 @@ import {
   TWEETS_QUERY
 } from '../graphql'; 
 import Tweet from "../tweet/index";
-import { ProfileCorner, Header } from "../styles/common";
 import { useSelector } from "react-redux";
-import Activity from '../profile/activity';
-import MenuBar from '../menubar/index';
-import SideBar from '../sidebar/index';
 
 
-function Home() {
+
+const Activity = (props) => {
+
     const [ tweetTitle, setTweetTitle ] = useState("");
     const [ tweetBody, setTweetBody ] = useState("");
   
@@ -75,24 +71,9 @@ function Home() {
       },
       [addTweet, tweetTitle, tweetBody],
     );
-  
-  return (
-    <React.Fragment>
-      <Row style={{ background: theme.bg }}>
-        <Col lg={4} md={5} xs={5}>
-          <MenuBar />
-        </Col>
-        <Col lg={5} md={4} xs={4}>
-          <Activity />
-        </Col>
-      <Col lg={2} md={0} xs={0}>
-        <SideBar loading={loading} data={data}/>
-      </Col>
-    </Row>
-  </React.Fragment>
-    
-  );
-          {/* 
+
+    return (
+        <Row>
           <Col xs="6" className={classes.form}>
           <Form onSubmit={handleFormSubmit}>
               <FormGroup row>
@@ -128,23 +109,26 @@ function Home() {
               Post Tweet!
               </Button>
           </Form>
+          <Row>
+            {/* <h3>Your Latest Tweets: </h3>
+            {
+                loading ? (
+                <p>Loading...</p>
+                ) : error ? (
+                <p>Error: </p>
+                ) : (
+                data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+                )
+            } */}
+          </Row>
           </Col>
-          <Col xs="6">
-            <h3>Your Latest Tweets: </h3>
-          {
-              loading ? (
-              <p>Loading...</p>
-              ) : error ? (
-              <p>Error: </p>
-              ) : (
-              data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-              )
-          }
-          </Col>
-      </Row> 
-     </Container>
-  </ProfileCorner>
-      );*/}
+          {/* <Col xs="6">
+            
+          </Col> */}
+      </Row>
+    );
+
+
 }
 
-export default Home;
+export default Activity;
