@@ -3,6 +3,11 @@
 ### Overview 
 A simple Twitter clone application built using React.js, GraphQL, Node.js and MongoDB. 
 
+## Screenshots 
+Homepage:
+![Homepage](/screenshots/homepage_image1.png)
+
+
 ## Getting Started
 
 To run this application locally just follow the steps below:

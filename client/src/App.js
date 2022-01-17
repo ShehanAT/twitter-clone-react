@@ -48,7 +48,6 @@ const App = () => {
       <>
       <Navbar isLoggedIn={isLoggedIn} />
       <Container>
-        <ProfileCorner border={theme.border}>
             <Container>
               <Row>
                 <Header border={theme.border} bg={theme.bg} color={theme.color}>
@@ -59,7 +58,6 @@ const App = () => {
                 <h3 className={classes.centerTitle}>What's on your mind?</h3>
               </Row> 
             </Container>
-          </ProfileCorner>
         <Routes>
           <Route exact path="/signup" component={<Signup/>}></Route>
           <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
