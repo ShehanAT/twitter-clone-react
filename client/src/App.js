@@ -13,7 +13,11 @@ import Explore from "./components/explore/index";
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import MenuBar from "./components/menubar/index";
 import SideBar from "./components/sidebar/index";
-import Activity from "./components/profile/activity";
+import BookMarks from "./components/bookmarks/index";
+import Notifications from './components/notifications';
+import Messages from './components/messages';
+import Lists from './components/lists';
+import Profile from './components/profile';
 import { ProfileCorner, Header } from "./components/styles/common";
 import classes from "./App.css";
 
@@ -27,6 +31,8 @@ const App = () => {
   const [ isLoggedIn, setIsLoggedIn] = useState(false);
 
   const theme = useSelector((state) => state.theme);
+
+  const username = sessionStorage.getItem("loggedInUserFirstName");
 
   const withMenuBar = (WrappedComponent) => (props) => (
     <React.Fragment>
@@ -61,8 +67,15 @@ const App = () => {
         <Routes>
           <Route exact path="/signup" component={<Signup/>}></Route>
           <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
-          <Route exact path="/explore" component={withMenuBar(Explore)}/>
+          <Route exact path="/explore" element={<Explore/>}/>
+          <Route exact path="/bookmarks" element={<BookMarks/>} />
+          <Route exact path="/home" element={<Home/>} />
+          <Route exact path="/notifications" element={<Notifications/>} />
+          <Route exact path="/messages" element={<Messages/>} />
+          <Route exact path="/lists" element={<Lists/>} />
+          <Route exact path="/profile/:username" element={<Profile username={username}/>} />
           <Route path="/" element={<Home/>}></Route>
+
         </Routes>
       </Container>
       </>

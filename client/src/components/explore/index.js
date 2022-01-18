@@ -6,6 +6,11 @@ import Icon from "../icon";
 import { Search, AutoComplete } from "../styles/explore";
 import { PeopleFlex, PeopleDetails, UserImage } from "../styles/profile";
 import { ProfileCorner } from "../styles/common";
+import { 
+  Row, 
+  Col   
+} from 'reactstrap';
+import MenuBar from '../menubar/index';
 
 const URL = process.env.REACT_APP_SERVER_URL;
 
@@ -37,74 +42,84 @@ const Explore = () => {
   };
 
   return (
-    <ProfileCorner border={theme.border}>
-      <div style={{ padding: "10px 15px" }}>
-        <Search bg={theme.bg}>
-          <Icon d={searchIcon} width="40px" height="18.75px" />
-          <input
-            placeholder="Search Twitter"
-            value={search}
-            style={{ caretColor: theme.color, color: theme.color }}
-            onChange={handleSearch}
-          />
-        </Search>
-        {users && !users.length && (
-          <AutoComplete boxShadow={theme.boxShadow}>
-            <h3
-              style={{
-                textAlign: "center",
-                fontWeight: 700,
-                color: theme.color,
-              }}
-            >
-              No results
-            </h3>
-          </AutoComplete>
-        )}
-        {users && users.length && (
-          <AutoComplete boxShadow={theme.boxShadow}>
-            {users.map((item) => (
-              <Link key={item.id} to={`/profile/${item.username}`}>
-                <PeopleFlex key={item.id}>
-                  <div>
-                    <UserImage src={item.avatar} />
-                  </div>
-                  <div style={{ width: "100%" }}>
-                    <PeopleDetails>
-                      <div>
-                        <object>
-                          <Link to={`/profile/${item.username}`}>
-                            <h3 style={{ color: theme.color }}>
-                              {item.firstname} {item.lastname}
-                            </h3>
-                          </Link>
-                        </object>
-                        <object>
-                          <Link to={`/profile/${item.username}`}>
-                            <p>@{item.username}</p>
-                          </Link>
-                        </object>
-                      </div>
-                      {/* <div>Following</div> */}
-                    </PeopleDetails>
+    <React.Fragment>
+    <Row style={{ background: theme.bg }}>
+    <Col lg={4} md={5} xs={5}>
+        <MenuBar />
+    </Col>
+    <Col lg={5} md={4} xs={4}>
+      <ProfileCorner border={theme.border}>
+        <div style={{ padding: "10px 15px" }}>
+          <Search bg={theme.bg}>
+            <Icon d={searchIcon} width="40px" height="18.75px" />
+            <input
+              placeholder="Search Twitter"
+              value={search}
+              style={{ caretColor: theme.color, color: theme.color }}
+              onChange={handleSearch}
+            />
+          </Search>
+          {users && !users.length && (
+            <AutoComplete boxShadow={theme.boxShadow}>
+              <h3
+                style={{
+                  textAlign: "center",
+                  fontWeight: 700,
+                  color: theme.color,
+                }}
+              >
+                No results
+              </h3>
+            </AutoComplete>
+          )}
+          {users && users.length && (
+            <AutoComplete boxShadow={theme.boxShadow}>
+              {users.map((item) => (
+                <Link key={item.id} to={`/profile/${item.username}`}>
+                  <PeopleFlex key={item.id}>
                     <div>
-                      <p>{item.bio}</p>
+                      <UserImage src={item.avatar} />
                     </div>
-                  </div>
-                </PeopleFlex>
-              </Link>
-            ))}
-          </AutoComplete>
-        )}
-        {!users && (
-          <h2
-            style={{ textAlign: "center", fontWeight: 700, color: theme.color }}
-          >
-            Search for users
-          </h2>
-        )}
-      </div>
-    </ProfileCorner>
+                    <div style={{ width: "100%" }}>
+                      <PeopleDetails>
+                        <div>
+                          <object>
+                            <Link to={`/profile/${item.username}`}>
+                              <h3 style={{ color: theme.color }}>
+                                {item.firstname} {item.lastname}
+                              </h3>
+                            </Link>
+                          </object>
+                          <object>
+                            <Link to={`/profile/${item.username}`}>
+                              <p>@{item.username}</p>
+                            </Link>
+                          </object>
+                        </div>
+                        {/* <div>Following</div> */}
+                      </PeopleDetails>
+                      <div>
+                        <p>{item.bio}</p>
+                      </div>
+                    </div>
+                  </PeopleFlex>
+                </Link>
+              ))}
+            </AutoComplete>
+          )}
+          {!users && (
+            <h2
+              style={{ textAlign: "center", fontWeight: 700, color: theme.color }}
+            >
+              Search for users
+            </h2>
+          )}
+        </div>
+      </ProfileCorner>
+        </Col>
+        </Row>
+    </React.Fragment>
+   
   );
 };
 

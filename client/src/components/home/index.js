@@ -92,59 +92,6 @@ function Home() {
   </React.Fragment>
     
   );
-          {/* 
-          <Col xs="6" className={classes.form}>
-          <Form onSubmit={handleFormSubmit}>
-              <FormGroup row>
-              <Label for="title" sm={2}>
-                  Title 
-              </Label>
-              <Col sm={10}>
-                  <Input 
-                  name="title"
-                  value={tweetTitle}
-                  id="title"
-                  place="Tweet title..."
-                  onChange={(e) => setTweetTitle(e.target.value)}
-                  />
-              </Col>
-              </FormGroup>
-              <FormGroup>
-              <Label for="body">Message Content:</Label>
-              <Input 
-                  type="textarea"
-                  name="body"
-                  value={tweetBody}
-                  id="body"
-                  placeholder="Tweet Body..."
-                  onChange={(e) => setTweetBody(e.target.value)}
-              />
-              </FormGroup>
-              <Button 
-              type="submit"
-              color="primary"
-              disabled={tweetTitle === "" || tweetBody === ""}  
-              >
-              Post Tweet!
-              </Button>
-          </Form>
-          </Col>
-          <Col xs="6">
-            <h3>Your Latest Tweets: </h3>
-          {
-              loading ? (
-              <p>Loading...</p>
-              ) : error ? (
-              <p>Error: </p>
-              ) : (
-              data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-              )
-          }
-          </Col>
-      </Row> 
-     </Container>
-  </ProfileCorner>
-      );*/}
 }
 
 export default Home;
