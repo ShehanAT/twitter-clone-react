@@ -7,6 +7,14 @@ A simple Twitter clone application built using React.js, GraphQL, Node.js and Mo
 Homepage:
 ![Homepage](/screenshots/homepage_image1.png)
 
+Bookmarks page:
+![Homepage](/screenshots/bookmarks_image1.png)
+
+Explore page:
+![Homepage](/screenshots/explore_image1.png)
+
+
+
 
 ## Getting Started
 
