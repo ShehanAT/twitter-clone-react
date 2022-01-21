@@ -15,7 +15,6 @@ import {
   GET_ALL_TWEETS_SUBSCRIPTION,
   TWEETS_QUERY
 } from '../graphql'; 
-import Tweet from "../tweet/index";
 import { useSelector } from "react-redux";
 
 
@@ -26,7 +25,7 @@ const Activity = (props) => {
     const [ tweetBody, setTweetBody ] = useState("");
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
-    const { loading, error, data, subscribeToMore } = useQuery(TWEETS_QUERY);
+    const { subscribeToMore } = useQuery(TWEETS_QUERY);
 
     // useMutation() is the primary API for executing queries in an Apollo application
     const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
@@ -110,21 +109,8 @@ const Activity = (props) => {
               </Button>
           </Form>
           <Row>
-            {/* <h3>Your Latest Tweets: </h3>
-            {
-                loading ? (
-                <p>Loading...</p>
-                ) : error ? (
-                <p>Error: </p>
-                ) : (
-                data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-                )
-            } */}
           </Row>
           </Col>
-          {/* <Col xs="6">
-            
-          </Col> */}
       </Row>
     );
 

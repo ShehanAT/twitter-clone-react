@@ -27,7 +27,7 @@ const TweetModal = (props) => {
     if (preview.media) data.append("media", preview.media);
     if (preview.image || preview.video)
       data.append("resource_type", preview.image ? "image" : "video");
-    const res = await axios.post(`${URL}/tweet/add-tweet`, data);
+
     setIsTweetDisabled(false);
     setText("");
     setPreview({ image: "", video: "", media: null });
@@ -39,7 +39,6 @@ const TweetModal = (props) => {
   const handlePhoto = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
     const isImage = file.type.includes("image");
 
     reader.onloadend = () => {
@@ -58,6 +57,7 @@ const TweetModal = (props) => {
             width="49px"
             height="49px"
             style={{ borderRadius: "50%" }}
+            alt="user avatar image"
           />
         </div>
         <div style={{ width: "100%" }}>
@@ -74,7 +74,7 @@ const TweetModal = (props) => {
           ></textarea>
           <div style={{ marginBottom: "10px" }}>
             {preview.image && (
-              <img src={preview.image} style={{ width: "100%" }} />
+              <img src={preview.image} style={{ width: "100%" }} alt="tweet image"/>
             )}
             {preview.video && (
               <video
