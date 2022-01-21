@@ -17,8 +17,8 @@ const Modal = (props) => {
   ];
 
   return (
-    <ModalWrapper modalBg={theme.modalBg}>
-      <ModalContent bg={theme.bg}>
+    <ModalWrapper modalBg={theme.modalBg} >
+      <ModalContent bg={theme.bg} style={{ marginTop: `20vh` }}>
         <ModalHeader border={theme.border} color={theme.color}>
           <CloseButton onClick={handleClose}>
             <Icon

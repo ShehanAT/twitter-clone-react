@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import UploadButton from "../uploadButton";
 import { Flex, Button } from "../styles/modal";
 import { SET_UPDATE } from "../../redux/actions";
-
+import  user_avatar  from "../../assets/user_avatar.png";
+import "./tweetModal.css";
 const URL = process.env.REACT_APP_SERVER_URL;
 
 const TweetModal = (props) => {
@@ -49,11 +50,11 @@ const TweetModal = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <div marginTop="25vh">
       <Flex bg={theme.bg} color={theme.color}>
         <div>
           <img
-            src={user.avatar}
+            src={user_avatar}
             width="49px"
             height="49px"
             style={{ borderRadius: "50%" }}
@@ -73,9 +74,9 @@ const TweetModal = (props) => {
             }}
           ></textarea>
           <div style={{ marginBottom: "10px" }}>
-            {preview.image && (
-              <img src={preview.image} style={{ width: "100%" }} alt="tweet image"/>
-            )}
+            {/* {user_avatar && (
+              <img src={user_avatar} style={{ width: "100%" }} alt="tweet image"/>
+            )} */}
             {preview.video && (
               <video
                 src={preview.video}
@@ -111,7 +112,7 @@ const TweetModal = (props) => {
           </Flex>
         </div>
       </Flex>
-    </React.Fragment>
+    </div>
   );
 };
 
