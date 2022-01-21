@@ -1,41 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import { toast } from "react-toastify";
 import UploadButton from "../uploadButton";
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Flex, Button } from "../styles/modal";
-import { SET_UPDATE } from "../../redux/actions";
+import { 
+  Form,
+  Input 
+} from 'reactstrap';
 import  user_avatar  from "../../assets/user_avatar.png";
+import { 
+  CREATE_TWEETS_MUTATION,
+  GET_ALL_TWEETS_SUBSCRIPTION,
+  TWEETS_QUERY
+} from '../graphql'; 
 import "./tweetModal.css";
 const URL = process.env.REACT_APP_SERVER_URL;
 
 const TweetModal = (props) => {
   const [text, setText] = useState("");
-  const [isTweetDisabled, setIsTweetDisabled] = useState(true);
+  const [isTweetDisabled, setIsTweetDisabled] = useState(false);
   const [preview, setPreview] = useState({ image: "", video: "", media: null });
 
-  const user = useSelector((state) => state.profile.user);
+  const [ tweetBody, setTweetBody ] = useState("");
+
+  // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
+  const { subscribeToMore } = useQuery(TWEETS_QUERY);
+
+  // useMutation() is the primary API for executing queries in an Apollo application
+  const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
+
+  useEffect(() => {
+    try {
+      // subscribeToMore() executes a subscription that pushes updates to the query's original result 
+      subscribeToMore({
+        document: GET_ALL_TWEETS_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if(!subscriptionData.data) return prev;
+
+          return { tweets: subscriptionData.data.getAllTweets.data }
+        },
+      });
+
+    } catch(e) {}
+  });
+
+  const handleFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      if(!tweetBody) return;
+      const loggedInUserId = sessionStorage.getItem("loggedInUserId");
+
+      addTweet({
+        variables: {
+          title: "",
+          body: tweetBody,
+          published: true,
+          authorId: loggedInUserId
+        },
+      });
+
+      // reset tweetBody to '' after previous tweet has been submitted
+      setTweetBody("");
+    },
+    [addTweet,  tweetBody],
+  );
+
   const theme = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
 
-  const { handleClose, rows } = props;
-
-  const addTweet = async () => {
-    setIsTweetDisabled(true);
-    const data = new FormData();
-    data.append("userId", user.id);
-    data.append("text", text);
-    if (preview.media) data.append("media", preview.media);
-    if (preview.image || preview.video)
-      data.append("resource_type", preview.image ? "image" : "video");
-
-    setIsTweetDisabled(false);
-    setText("");
-    setPreview({ image: "", video: "", media: null });
-    toast("Your tweet was sent");
-    dispatch({ type: SET_UPDATE });
-    handleClose && handleClose();
-  };
 
   const handlePhoto = (e) => {
     const file = e.target.files[0];
@@ -50,7 +82,8 @@ const TweetModal = (props) => {
   };
 
   return (
-    <div marginTop="25vh">
+    <div>
+      <Form onSubmit={handleFormSubmit}>
       <Flex bg={theme.bg} color={theme.color}>
         <div>
           <img
@@ -62,21 +95,15 @@ const TweetModal = (props) => {
           />
         </div>
         <div style={{ width: "100%" }}>
-          <textarea
-            rows={rows || 5}
-            placeholder="What's happening?"
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-              e.target.value
-                ? setIsTweetDisabled(false)
-                : setIsTweetDisabled(true);
-            }}
-          ></textarea>
+           <Input 
+                  type="textarea"
+                  name="body"
+                  value={tweetBody}
+                  id="body"
+                  placeholder="Tweet Body..."
+                  onChange={(e) => setTweetBody(e.target.value)}
+              />
           <div style={{ marginBottom: "10px" }}>
-            {/* {user_avatar && (
-              <img src={user_avatar} style={{ width: "100%" }} alt="tweet image"/>
-            )} */}
             {preview.video && (
               <video
                 src={preview.video}
@@ -101,7 +128,7 @@ const TweetModal = (props) => {
             </div>
             <div>
               <Button
-                onClick={addTweet}
+                onClick={handleFormSubmit}
                 disabled={isTweetDisabled}
                 defaultBg={theme.defaultBg}
                 darkBg={theme.darkBg}
@@ -112,6 +139,7 @@ const TweetModal = (props) => {
           </Flex>
         </div>
       </Flex>
+      </Form>
     </div>
   );
 };
