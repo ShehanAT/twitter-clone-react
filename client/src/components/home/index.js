@@ -1,24 +1,14 @@
 
-import React, { useEffect, useCallback, useState } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import { 
-  Container,
   Row, 
   Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button 
 } from 'reactstrap';
-import classes from "../../App.css";
 import { 
-  CREATE_TWEETS_MUTATION,
   GET_ALL_TWEETS_SUBSCRIPTION,
   TWEETS_QUERY
 } from '../graphql'; 
-import Tweet from "../tweet/index";
-import { ProfileCorner, Header } from "../styles/common";
 import { useSelector } from "react-redux";
 import Activity from '../profile/activity';
 import MenuBar from '../menubar/index';
@@ -26,14 +16,9 @@ import SideBar from '../sidebar/index';
 
 
 function Home() {
-    const [ tweetTitle, setTweetTitle ] = useState("");
-    const [ tweetBody, setTweetBody ] = useState("");
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
-    const { loading, error, data, subscribeToMore } = useQuery(TWEETS_QUERY);
-
-    // useMutation() is the primary API for executing queries in an Apollo application
-    const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
+    const { loading, data, subscribeToMore } = useQuery(TWEETS_QUERY);
 
     const theme = useSelector((state) => state.theme);
   
@@ -51,30 +36,6 @@ function Home() {
   
       } catch(e) {}
     });
-  
-   
-    const handleFormSubmit = useCallback(
-      (e) => {
-        e.preventDefault();
-  
-        if(!tweetTitle || !tweetBody) return;
-        const loggedInUserId = sessionStorage.getItem("loggedInUserId");
-
-        addTweet({
-          variables: {
-            title: tweetTitle,
-            body: tweetBody,
-            published: true,
-            authorId: loggedInUserId
-          },
-        });
-  
-        // reset tweetTitle and tweetBody to '' after previous tweet has been submitted
-        setTweetTitle("");
-        setTweetBody("");
-      },
-      [addTweet, tweetTitle, tweetBody],
-    );
   
   return (
     <React.Fragment>
