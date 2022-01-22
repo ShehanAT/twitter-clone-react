@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { Field, reduxForm } from "redux-form";
+import { reduxForm } from "redux-form";
 import { Form, Button, Error } from "../styles/signin";
 import { 
     FormGroup,
     Label,
+    Input
   } from 'reactstrap';
 import { useMutation } from '@apollo/react-hooks';
 import { 
@@ -27,14 +28,6 @@ const validate = (data) => {
 
   return errors;
 };
-
-
-const Input = ({ input, type, placeholder, meta: { touched, error } }) => (
-  <React.Fragment>
-    <input {...input} type={type} placeholder={placeholder} />
-    {touched && error && <Error>{error}</Error>}
-  </React.Fragment>
-);
 
 let SignupForm = (props) => {
 
@@ -79,8 +72,9 @@ let SignupForm = (props) => {
                 password: password
                 }
             });
+            props.handleModalClose();
             toast("User Registration Successful");
-            navigate("/login");
+            // navigate("/login");
             }
         } 
         },
@@ -103,7 +97,7 @@ let SignupForm = (props) => {
     };
 
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSignupFormSubmit}>
         <Form>
                 {/* Labels and inputs for form data */}
                 <FormGroup row>

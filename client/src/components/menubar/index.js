@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, NavLink, useHistory, useNavigate } from "react-router-dom";
+import { Link, Navigate, NavLink, useHistory, useNavigate } from "react-router-dom";
 
 import Icon from "../icon";
 import Modal from "../modal";
@@ -18,9 +18,12 @@ const MenuBar = () => {
     const dispatch = useDispatch();
     const history = useNavigate();
 
+    const navigate = useNavigate();
+
     const handleLogout = () => {
       sessionStorage.removeItem("jwtToken");
       sessionStorage.removeItem("loggedInUserFirstName");
+      navigate("/");
       window.location.reload(false);
     };
 

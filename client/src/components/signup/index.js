@@ -65,7 +65,8 @@ const Signup = () => {
           <SignupForm 
             onSubmit={handleSignupSubmit}
             userError={userError}
-            loginDisabled={loginDisabled} />
+            loginDisabled={loginDisabled}
+            handleModalClose={() => setIsModalOpen(!isModalOpen)}/>
         }
         handleClose={() => setIsModalOpen(!isModalOpen)}
         padding="15px"
