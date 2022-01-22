@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from 'react-router-dom';
 import Signup from "./components/signup/index";
 import Home from "./components/home/index";
-import Navbar from "./components/navbar/index";
 import Login from "./components/login/index";
 import Explore from "./components/explore/index";
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -34,7 +33,6 @@ const App = () => {
 
   return (
     <>
-    <Navbar isLoggedIn={isLoggedIn} />
     <Container>
           <Container>
             <Row>
@@ -47,7 +45,7 @@ const App = () => {
             </Row> 
           </Container>
       <Routes>
-        <Route exact path="/signup" component={<Signup/>}></Route>
+        <Route path="/home" element={<Home/>}></Route>
         <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
         <Route exact path="/explore" element={<Explore/>}/>
         <Route exact path="/bookmarks" element={<BookMarks/>} />
@@ -56,7 +54,7 @@ const App = () => {
         <Route exact path="/messages" element={<Messages/>} />
         <Route exact path="/lists" element={<Lists/>} />
         <Route exact path="/profile/:username" element={<Profile username={username}/>} />
-        <Route path="/" element={<Home/>}></Route>
+        <Route exact path="/" component={<Signup/>}></Route>
 
       </Routes>
     </Container>

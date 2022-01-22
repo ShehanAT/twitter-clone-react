@@ -19,8 +19,9 @@ const MenuBar = () => {
     const history = useNavigate();
 
     const handleLogout = () => {
-        dispatch({ type: LOGOUT_USER })
-        history.replace("/");
+      sessionStorage.removeItem("jwtToken");
+      sessionStorage.removeItem("loggedInUserFirstName");
+      window.location.reload(false);
     };
 
     const brand = [
