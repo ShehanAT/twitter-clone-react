@@ -64,11 +64,15 @@ const MenuBar = () => {
         setIsModalOpen(false);
     }
 
+    const handleSubmittedTweetEvent = () => {
+      setIsModalOpen(false);
+    }
+
     return (
         <React.Fragment>
           {isModalOpen && (
             <Modal
-              children={<TweetModal handleClose={handleClose} />}
+              children={<TweetModal handleClose={handleClose} handleSubmittedTweetEvent={handleSubmittedTweetEvent.bind(this)}/>}
               handleClose={handleClose}
               padding="15px"
             />

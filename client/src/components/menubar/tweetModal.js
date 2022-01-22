@@ -44,6 +44,8 @@ const TweetModal = (props) => {
     } catch(e) {}
   });
 
+  const handleSubmittedTweet = props.handleSubmittedTweetEvent;
+
   const handleFormSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -62,6 +64,7 @@ const TweetModal = (props) => {
 
       // reset tweetBody to '' after previous tweet has been submitted
       setTweetBody("");
+      handleSubmittedTweet();
     },
     [addTweet,  tweetBody],
   );
@@ -81,7 +84,10 @@ const TweetModal = (props) => {
     };
   };
 
+
+
   return (
+    
     <div>
       <Form onSubmit={handleFormSubmit}>
       <Flex bg={theme.bg} color={theme.color}>
