@@ -33,7 +33,6 @@ const App = () => {
 
   return (
     <>
-    <Container>
           {/* <Container>
             <Row>
               <Header border={theme.border} bg={theme.bg} color={theme.color}>
@@ -57,7 +56,6 @@ const App = () => {
         <Route exact path="/" element={<Signup/>}></Route>
 
       </Routes>
-    </Container>
     </>
   )
 }

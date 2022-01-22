@@ -71,7 +71,7 @@ const Signup = () => {
         padding="15px"
       />
     )}
-    <Row>
+    <Row style={{ display: 'flex' }}>
       <Col
         md={12}
         xs={24}
