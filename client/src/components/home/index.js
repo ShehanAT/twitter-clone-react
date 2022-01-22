@@ -10,7 +10,6 @@ import {
   TWEETS_QUERY
 } from '../graphql'; 
 import { useSelector } from "react-redux";
-import Activity from '../profile/activity';
 import MenuBar from '../menubar/index';
 import SideBar from '../sidebar/index';
 
@@ -42,9 +41,6 @@ function Home() {
       <Row style={{ background: theme.bg }}>
         <Col lg={4} md={5} xs={5}>
           <MenuBar />
-        </Col>
-        <Col lg={5} md={4} xs={4}>
-          <Activity />
         </Col>
       <Col lg={2} md={0} xs={0}>
         <SideBar loading={loading} data={data}/>

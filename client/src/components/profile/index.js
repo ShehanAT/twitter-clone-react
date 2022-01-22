@@ -7,7 +7,6 @@ import Icon from "../icon";
 import ProfileHeader from "../profileHeader";
 import Tabs from "../tabs";
 import Follow from "../follow/index";
-import Activity from "./activity";
 import Modal from "../modal";
 import EditProfileForm from "./editProfileForm";
 import { Info, Dates, Cover, Avatar, ImgFlex, Button } from "../styles/profile";
@@ -115,45 +114,6 @@ const Profile = (props) => {
 
   if (activity === "followers" || activity === "following") return <Follow />;
 
-  const renderTab = () => {
-    // undefined -> tweet
-    switch (activity) {
-      case undefined:
-        return (
-          <div>
-            <Activity
-              url={`${URL}/user/get-tweets?userId=${user.id}&myId=${myId}`}
-              dataKey="tweets"
-              header="Tweets"
-              handleHeaderText={handleHeaderText}
-            />
-          </div>
-        );
-      case "media":
-        return (
-          <div>
-            <Activity
-              url={`${URL}/user/get-media?userId=${user.id}&myId=${myId}`}
-              dataKey="media"
-              header="Photos &amp; Videos"
-              handleHeaderText={handleHeaderText}
-            />
-          </div>
-        );
-      case "likes":
-        return (
-          <div>
-            <Activity
-              url={`${URL}/user/get-likes?userId=${user.id}&myId=${myId}`}
-              dataKey="likes"
-              header="Likes"
-              handleHeaderText={handleHeaderText}
-            />
-          </div>
-        );
-    }
-  };
-
   return (
     <React.Fragment>
       {isModalOpen && (
@@ -242,7 +202,6 @@ const Profile = (props) => {
           <Follower user={user} />
         </Info>
         <Tabs tabList={tabList} />
-        {renderTab()}
       </ProfileCorner>
     </React.Fragment>
   );
