@@ -4,11 +4,7 @@ import axios from "axios";
 import { SET_UPDATE } from "../../redux/actions";
 import Tweet from "../tweet/index";
 
-const URL = process.env.REACT_APP_SERVER_URL;
-
 const SideBar = (props) => {
-  const [whoFollow, setWhoFollow] = useState(null);
-  const [isFollowDisabled, setFollowDisabled] = useState(false);
 
   const user = useSelector((state) => state.profile.user);
   const userId = user.id;
@@ -25,31 +21,6 @@ const SideBar = (props) => {
     };
   }, [refresh]);
 
-  const handleFollow = async (e, idx) => {
-    e.preventDefault();
-    setFollowDisabled(true);
-    await axios.post(
-      `${URL}/follow`,
-      {
-        followedId: whoFollow[idx].id,
-        followerId: userId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const res = await axios.get(`${URL}/feed/who-follow?userId=${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setWhoFollow(res.data.whoFollow);
-    setFollowDisabled(false);
-    dispatch({ type: SET_UPDATE });
-  };
-
   return (
       <>
         <h3>Your Latest Tweets: </h3>
@@ -58,8 +29,10 @@ const SideBar = (props) => {
             <p>Loading...</p>
             ) : props.error ? (
             <p>Error: </p>
-            ) : (
-            props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+            ) : props.data ? (
+              <p>Loading...</p>
+            ) :  (
+              props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
             )
             }
       </>
