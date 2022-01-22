@@ -2,9 +2,7 @@ import { gql } from "@apollo/client";
 
 const TWEETS_QUERY = gql`
     query {
-   
         tweets {
-            title 
             body 
             author {
                 firstName 
@@ -36,7 +34,6 @@ const USERS_AND_TWEETS_QUERY = gql`
                 age
             }
             tweets{
-                title 
                 body 
                 author {
                     firstName 

@@ -96,7 +96,6 @@ const Mutation = {
             }
             
             const newTweet = new Tweet({
-                title: args.data.title,
                 body: args.data.body,
                 published: args.data.published,
                 author: foundUser,
@@ -164,15 +163,6 @@ const Mutation = {
         
         if(!foundTweet){
             throw new Error("tweet not found!");
-        }
-
-        if(typeof data.title === "string"){
-            const duplicateTweet = db.tweets.some((tweet) => { tweet.title === data.title });
-            
-            if(duplicateTweet){
-                throw new Error("Duplicate tweet title found!");
-            }
-            foundTweet.title = data.tile;
         }
 
         if(typeof data.body === "string"){

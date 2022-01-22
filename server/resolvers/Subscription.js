@@ -27,8 +27,6 @@ const Subscription = {
     getAllTweets: {
         async subscribe(parent, args, { pubsub }, info){
             return pubsub.asyncIterator('getAllTweets');
-            // const allTweets = await Tweet.find();
-            // return allTweets;
         },
     },
     user: {

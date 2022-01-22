@@ -5,7 +5,6 @@ const TWEETS_SUBSCRIPTION = gql`
         tweet {
             mutation 
             data {
-                title 
                 body 
                 author {
                     firstName 
@@ -39,7 +38,6 @@ const GET_ALL_TWEETS_SUBSCRIPTION = gql`
         getAllTweets {
             mutation
             data { 
-                title 
                 body 
                 author {
                     firstName 

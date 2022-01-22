@@ -15,21 +15,8 @@ const Query = {
         });
     },
     async tweets(parent, args, { db }, info){
-        // if(!args.query){
-        //     return db.tweets;
-        // }
-
-        // return db.tweets.filter((tweet) => {
-        //     console.log(tweet);
-        //     const isTitleMatch = tweet.title.toLowerCase().includes(args.query.toLowerCase());
-        //     const isBodyMatch = tweet.body.toLowerCase().includes(args.query.toLowerCase());
-            
-        //     return isTitleMatch || isBodyMatch;
-        // });
-
         const dbTweets = await Tweet.find();
         return dbTweets;
-        // return { tweets: dbTweets }
     },
     async usersAndTweets(parent, args, { db }, info){
         if(!args.query){

@@ -15,7 +15,6 @@ userSchema.add({
     tweets: [
         tweetSchema.add(new mongoose.Schema({
             id: mongoose.ObjectId,
-            title: String,
             body: String,
             published: Boolean,
             author: userSchema,

@@ -42,7 +42,6 @@ type User {
 
 type Tweet {
     id: ID!
-    title: String
     body: String
     published: Boolean
     author: User
@@ -51,7 +50,6 @@ type Tweet {
 
 type TweetWithID {
     id: BigInt 
-    title: String 
     body: String 
     published: Boolean 
     author: User 
@@ -98,7 +96,6 @@ input UpdateUserInput {
 }
 
 input CreateTweetInput {
-    title: String 
     body: String 
     published: Boolean
     author: ID
@@ -110,7 +107,6 @@ input UserLoginInput {
 }
 
 input UpdateTweetInput {
-    title: String 
     body: String 
     published: Boolean 
     author: ID

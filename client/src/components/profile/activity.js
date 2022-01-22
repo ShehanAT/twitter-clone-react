@@ -21,7 +21,6 @@ import { useSelector } from "react-redux";
 
 const Activity = (props) => {
 
-    const [ tweetTitle, setTweetTitle ] = useState("");
     const [ tweetBody, setTweetBody ] = useState("");
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
@@ -52,43 +51,27 @@ const Activity = (props) => {
       (e) => {
         e.preventDefault();
   
-        if(!tweetTitle || !tweetBody) return;
+        if(!tweetBody) return;
         const loggedInUserId = sessionStorage.getItem("loggedInUserId");
 
         addTweet({
           variables: {
-            title: tweetTitle,
             body: tweetBody,
             published: true,
             authorId: loggedInUserId
           },
         });
   
-        // reset tweetTitle and tweetBody to '' after previous tweet has been submitted
-        setTweetTitle("");
+        // reset tweetBody to '' after previous tweet has been submitted
         setTweetBody("");
       },
-      [addTweet, tweetTitle, tweetBody],
+      [addTweet, tweetBody],
     );
 
     return (
         <Row>
           <Col xs="6" className={classes.form}>
           <Form onSubmit={handleFormSubmit}>
-              <FormGroup row>
-              <Label for="title" sm={2}>
-                  Title 
-              </Label>
-              <Col sm={10}>
-                  <Input 
-                  name="title"
-                  value={tweetTitle}
-                  id="title"
-                  place="Tweet title..."
-                  onChange={(e) => setTweetTitle(e.target.value)}
-                  />
-              </Col>
-              </FormGroup>
               <FormGroup>
               <Label for="body">Message Content:</Label>
               <Input 
@@ -103,7 +86,7 @@ const Activity = (props) => {
               <Button 
               type="submit"
               color="primary"
-              disabled={tweetTitle === "" || tweetBody === ""}  
+              disabled={tweetBody === ""}  
               >
               Post Tweet!
               </Button>

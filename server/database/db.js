@@ -28,21 +28,18 @@ const users = [
   const tweets = [
     {
       id: '10',
-      title: 'JSON File Data',
       body: 'These are tweets read from a JSON file acting as a primitive database',
       published: true,
       author: '1',
     },
     {
       id: '11',
-      title: 'Bald Eagle Trivia',
       body: 'The flying velocity of a bald eagle is 88mph on windy days',
       published: false,
       author: '1',
     },
     {
       id: '12',
-      title: 'Value of exercise',
       body: 'Exercise strengths the body and mind',
       published: true,
       author: '2',
