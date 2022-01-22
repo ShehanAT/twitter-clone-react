@@ -1,176 +1,135 @@
-import { useState, useCallback } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import React, { useState } from 'react';
 import "./index.css";
-import { 
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button 
-} from 'reactstrap';
-import { 
-  CREATE_USER_MUTATION,
-} from '../graphql'; 
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Row, Col } from "antd";
+import { LogoWrapper, Motto, Button, Flex } from "../styles/signin";
+import { logo, motto } from "./paths";
+import Icon from "../icon";
+import LoginForm from "./loginForm";
+import Modal from "../modal";
+import SignupForm from "./signupForm";
 
 const Signup = () => {
- 
-  // States for registration
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [age, setAge] = useState(0);
- 
-  // States for checking the errors
-  const [submitted] = useState(false);
-  const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
-  const [passwordsNotMatchingErrorMessage, setPasswordsNotMatchingErrorMessage] = useState(false);
- 
-  // useMutation() is the primary API for executing queries in an Apollo application
-  const [addUser] = useMutation(CREATE_USER_MUTATION);
-  
-  const navigate = useNavigate();
+
+  const [loginDisabled, setLoginDisabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [credentialError, setCredentialError] = useState({
+    user: null,
+    password: null,
+  });
+  const [userError, setUserError] = useState({
+    username: null,
+    email: null,
+  });
 
   toast.configure();
   // useCallback() returns a memoized callback. Memoization is an optimization technique used primarily to speed up computer programs by storing the results for expensive function calls and returning the cached result when the same inputs occur again.
   // useCallback() also returns the same function instance between renderings(aka memoization)
   // as long as addUser, firstName, lastName, etc variable values are the same, useCallback() does not submit the form. If one or more of the values change then the form is submitted
-  const handleSignupFormSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (firstName === '' || lastName === '' || email === '' || password === '' || confirmPassword === '') {
-        setEmptyFieldsErrorMessage(true);
-        setPasswordsNotMatchingErrorMessage(false);
-      } 
-      else {
-        if(password !== confirmPassword){
-          setPasswordsNotMatchingErrorMessage(true);
-          setEmptyFieldsErrorMessage(false);
-        }else{
-          addUser({
-            variables: {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              age: age,
-              password: password
-            }
-          });
-          toast("User Registration Successful");
-          navigate("/login");
-        }
-      } 
-    },
-    [addUser, firstName, lastName, email, password, confirmPassword, age],
-  );
- 
-  // Showing success message
-  const successMessage = () => {
-    return (
-      <div
-        className="success"
-        style={{
-          display: submitted ? '' : 'none',
-        }}>
-        <h1>User {firstName} {lastName} successfully registered!!</h1>
-      </div>
-    );
-  };
- 
-  // Showing error message if error is true
-  const showEmptyFieldsErrorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: emptyFieldsErrorMessage ? '' : 'none',
-        }}>
-        <h1 style=
-          {{
-            color: '#FF0000'
-          }}
-        >Please enter all the fields</h1>
-      </div>
-    );
+  
+
+  const handleSubmit = async (data) => {
+    try {
+      setLoginDisabled(true);
+      // const login = await axios.post(`${URL}/user/login-user`, data);
+      // setCredentialError({ user: null, password: null });
+      // setLoginDisabled(false);
+      // dispatch({ type: SET_USER, payload: login.data.user });
+      // dispatch({ type: SET_THEME, payload: "default" });
+      // history.push("/home");
+    } catch (err) {
+      setCredentialError(err.response.data);
+      setLoginDisabled(false);
+    }
   };
 
-  const showPasswordsNotMatchingErrorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: passwordsNotMatchingErrorMessage ? '' : 'none',
-        }}>
-        <h1 style=
-          {{
-            color: '#FF0000'
-          }}
-        >Passwords do not match. Please try again...</h1>
-      </div>
-    );
-  };
+  const handleSignupSubmit = async (data) => {
+    try {
+      setLoginDisabled(true);
+      // call GraphQL mutation 'createUser()'
+    }catch(err){
+      setUserError(err.response.data.errors);
+      setLoginDisabled(false);
+    }
+  }
+ 
+ 
  
   return (
-    <div className="form">
-      <div>
-        <h1>User Registration</h1>
-      </div>
- 
-      {/* Calling to the methods */}
-      <div className="messages">
-        {showEmptyFieldsErrorMessage()}
-        {showPasswordsNotMatchingErrorMessage()}
-        {successMessage()}
-      </div>
- 
-      <Form onSubmit={handleSignupFormSubmit}>
-        {/* Labels and inputs for form data */}
-        <FormGroup row>
-          <Label className="label">First Name</Label>
-          <Input onChange={(e) => setFirstName(e.target.value)} className="input"
-          value={firstName} type="text" />
-        </FormGroup>
-
-        <FormGroup row>
-          <Label className="label">Last Name</Label>
-          <Input onChange={(e) => setLastName(e.target.value)} className="input"
-          value={lastName} type="text" />
-        </FormGroup>
-
-        <FormGroup row>
-          <Label className="label">Email</Label>
-          <Input onChange={(e) => setEmail(e.target.value)} className="input"
-          value={email} type="email" />
-        </FormGroup> 
-        
-        <FormGroup row>
-          <Label className="label">Password</Label>
-          <Input onChange={(e) => setPassword(e.target.value)} className="input"
-            value={password} type="password" />
-        </FormGroup>
-
-        <FormGroup row>
-          <Label className="label">Confirm Password</Label>
-          <Input onChange={(e) => setConfirmPassword(e.target.value)} className="input"
-            value={confirmPassword} type="password" />
-        </FormGroup>
-
-        <FormGroup row>
-          <Label className="label">Age</Label>
-          <Input onChange={(e) => setAge(e.target.value)} className="input"
-            value={age} type="number" />
-        </FormGroup>
-
-        <Button onClick={handleSignupFormSubmit} className="btn btn-primary submit-btn" type="submit">
-          Submit
-        </Button>
-
-      </Form>
-    </div>
+    <React.Fragment>
+    {isModalOpen && (
+      <Modal
+        children={
+          <SignupForm 
+            onSubmit={handleSignupSubmit}
+            userError={userError}
+            loginDisabled={loginDisabled} />
+        }
+        handleClose={() => setIsModalOpen(!isModalOpen)}
+        padding="15px"
+      />
+    )}
+    <Row>
+      <Col
+        md={12}
+        xs={24}
+        style={{ overflow: "hidden", position: "relative" }}
+      >
+        <LogoWrapper>
+          <Icon d={logo} height="130vh" fill="rgb(29,161,242)" />
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%,-50%)",
+            }}
+          >
+            {motto.map((item) => (
+              <Motto key={item.text}>
+                <Icon
+                  d={item.path}
+                  width="28.75px"
+                  height="28.75px"
+                  fill="rgb(255,255,255)"
+                />
+                <span>{item.text}</span>
+              </Motto>
+            ))}
+          </div>
+        </LogoWrapper>
+      </Col>
+      <Col md={12} xs={24} style={{ padding: "15px" }}>
+        <LoginForm
+          onSubmit={handleSubmit}
+          credentialError={credentialError}
+          loginDisabled={loginDisabled}
+        />
+        <Flex>
+          <div>
+            <Icon
+              d={logo}
+              width="41.25px"
+              height="41.25px"
+              fill="rgb(29,161,242)"
+            />
+            <h1>See what's happening in the world right now</h1>
+            <p>Join twitter today.</p>
+            <Button
+              bg="rgb(29,160,240)"
+              color="rgb(255,255,255)"
+              hovbg="rgb(26, 146, 220)"
+              onClick={() => setIsModalOpen(!isModalOpen)}
+            >
+              Sign up
+            </Button>
+          </div>
+        </Flex>
+      </Col>
+    </Row>
+  </React.Fragment>
   );
 }
 

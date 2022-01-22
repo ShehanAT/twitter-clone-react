@@ -50,7 +50,6 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
     <BrowserRouter>
      <Provider store={redux.store}>
       <ApolloProvider client={client}>
@@ -60,7 +59,6 @@ ReactDOM.render(
       </ApolloProvider>
     </Provider>
     </BrowserRouter>
-  </React.StrictMode>
   ,
   document.getElementById('root')
 );

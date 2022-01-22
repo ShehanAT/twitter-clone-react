@@ -34,7 +34,7 @@ const App = () => {
   return (
     <>
     <Container>
-          <Container>
+          {/* <Container>
             <Row>
               <Header border={theme.border} bg={theme.bg} color={theme.color}>
                 <h1 className={classes.centerTitle}>Twitter Clone Application</h1>
@@ -43,7 +43,7 @@ const App = () => {
             <Row>
               <h3 className={classes.centerTitle}>What's on your mind?</h3>
             </Row> 
-          </Container>
+          </Container> */}
       <Routes>
         <Route path="/home" element={<Home/>}></Route>
         <Route exact path="/login" element={<Login/>} client={apolloClient}></Route>
@@ -54,7 +54,7 @@ const App = () => {
         <Route exact path="/messages" element={<Messages/>} />
         <Route exact path="/lists" element={<Lists/>} />
         <Route exact path="/profile/:username" element={<Profile username={username}/>} />
-        <Route exact path="/" component={<Signup/>}></Route>
+        <Route exact path="/" element={<Signup/>}></Route>
 
       </Routes>
     </Container>
