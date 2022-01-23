@@ -52,7 +52,7 @@ function Home() {
           <MenuBar />
         </Col>
       <Col lg={2} md={0} xs={0}>
-        <SideBar loading={loading} data={data} key={dataId}/>
+        {data ? <SideBar loading={loading} data={data} key={dataId}/> : null }
       </Col>
     </Row>
   </React.Fragment>

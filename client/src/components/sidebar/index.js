@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { SET_UPDATE } from "../../redux/actions";
 import Tweet from "../tweet/index";
+import props from 'prop-types';
 
 const SideBar = (props) => {
 
@@ -29,11 +30,13 @@ const SideBar = (props) => {
             <p>Loading...</p>
             ) : props.error ? (
             <p>Error: </p>
-            ) : props.data ? (
-              <p>Loading...</p>
-            ) :  (
-              props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-            )
+            ) : props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+              
+            // props.data ? (
+            //   <p>Loading...</p>
+            // ) :  (
+            //   props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
+            // )
             }
       </>
   );
