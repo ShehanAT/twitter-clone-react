@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { SET_UPDATE } from "../../redux/actions";
 import Tweet from "../tweet/index";
-import props from 'prop-types';
+
 
 const SideBar = (props) => {
 
@@ -25,19 +25,15 @@ const SideBar = (props) => {
   return (
       <>
         <h3>Your Latest Tweets: </h3>
-            {
+        {/* <PaginatedItems itemsPerPage={4} allItems={props.data.tweets} /> */}
+            {/* {
             props.loading ? (
             <p>Loading...</p>
             ) : props.error ? (
             <p>Error: </p>
             ) : props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
               
-            // props.data ? (
-            //   <p>Loading...</p>
-            // ) :  (
-            //   props.data.tweets.map((tweet, id) => <Tweet data={tweet} key={id} />)
-            // )
-            }
+            } */}
       </>
   );
 };

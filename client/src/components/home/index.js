@@ -10,8 +10,8 @@ import {
 } from '../graphql'; 
 import { useSelector } from "react-redux";
 import MenuBar from '../menubar/index';
-import SideBar from '../sidebar/index';
 import { toast } from 'react-toastify';
+import PaginatedItems from './paginatedItems';
 
 function Home() {
   
@@ -52,7 +52,9 @@ function Home() {
           <MenuBar />
         </Col>
       <Col lg={2} md={0} xs={0}>
-        {data ? <SideBar loading={loading} data={data} key={dataId}/> : null }
+        {data ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
+        // <SideBar loading={loading} data={data} key={dataId}/> 
+        : null }
       </Col>
     </Row>
   </React.Fragment>
