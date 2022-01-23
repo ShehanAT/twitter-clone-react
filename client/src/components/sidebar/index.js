@@ -24,7 +24,7 @@ const SideBar = (props) => {
 
   return (
       <>
-        <h3>Your Latest Tweets: </h3>
+        
         {/* <PaginatedItems itemsPerPage={4} allItems={props.data.tweets} /> */}
             {/* {
             props.loading ? (
