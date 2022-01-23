@@ -13,8 +13,9 @@ Bookmarks page:
 Explore page:
 ![Homepage](/screenshots/explore_image1.png)
 
-
-
+### Live version
+Backend version: https://twitter-clone-node-app.herokuapp.com/ 
+Frontend version: https://gracious-khorana-ceda2c.netlify.app/
 
 ## Getting Started
 
@@ -24,6 +25,7 @@ To run this application locally just follow the steps below:
 3. Cd into the ```{root_directory}/client``` directory and run ```npm install```
 4. Run ```node index.js``` from ```{root_directory}/server``` directory 
 5. Run ```npm start``` from ```{root_directory}/client``` 
+
 
 ### Prerequisites
 
