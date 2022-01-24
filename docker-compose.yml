@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: ./server/Dockerfile 
+    image: "natukorala/twitter-clone-server"
+    ports: 
+      - "8080:8080"
+  frontend:
+    build: 
+      context: ./
+      dockerfile: ./client/Dockerfile 
+    image: "natukorala/twitter-clone-client"
+    ports:
+      - "3000:3000"
+    links:
+      - "backend:be"
