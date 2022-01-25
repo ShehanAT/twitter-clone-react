@@ -17,14 +17,13 @@ Explore page:
 ![Explore page](/screenshots/explore_image1.png)
 
 Message page:
-![Message page](/screenshots/message_image1.png)
-
+![Message page](/screenshots/messages_image1.png)
 
 ### Live version
-Backend version: https://twitter-clone-node-app.herokuapp.com/ 
-Frontend version: https://gracious-khorana-ceda2c.netlify.app/
+Backend version: https://twitter-clone-node-app.herokuapp.com/  
+Frontend version: https://gracious-khorana-ceda2c.netlify.app/  
 
-## Getting Started
+# Getting Started
 
 ### Running with Docker 
 To run this application using Docker just follow the steps below:
@@ -33,9 +32,7 @@ To run this application using Docker just follow the steps below:
    build the frontend and backend application Docker images 
 3. Run ```docker-compose up -d``` again to start the fronted and backend application 
    Docker images
-    
-
-
+4. Navigate to ```http://localhost:3000/``` to view application 
 
 ### Running Locally 
 To run this application locally just follow the steps below:
@@ -85,15 +82,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- ROADMAP -->
 ## Roadmap
 
 - [x] Added login & registration functionality
 - [x] Added 'Create Tweets' feature in homepage 
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
+- [x] Add unit tests for Homepage and Signup page
+- [ ] Add OAuth2 authentication in Signup page
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
