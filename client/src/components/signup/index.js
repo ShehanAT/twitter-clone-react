@@ -9,11 +9,16 @@ import Icon from "../icon";
 import LoginForm from "./loginForm";
 import Modal from "../modal";
 import SignupForm from "./signupForm";
+import OAuth2Login from 'react-simple-oauth2-login';
+import ReactDOM from 'react-dom';
 
 const Signup = () => {
 
   const [loginDisabled, setLoginDisabled] = useState(false);
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const [credentialError, setCredentialError] = useState({
     user: null,
@@ -55,6 +60,9 @@ const Signup = () => {
     }
   }
  
+  const handleLoginModalClose = () => {
+    setIsLoginModalOpen(false);
+}
  
  
   return (
@@ -71,6 +79,19 @@ const Signup = () => {
         handleClose={() => setIsModalOpen(!isModalOpen)}
         padding="15px"
       />
+    )}
+
+    {isLoginModalOpen && (
+            <Modal
+              children={
+              <LoginForm
+                onSubmit={handleSubmit}
+                credentialError={credentialError}
+                loginDisabled={loginDisabled} />
+              }
+              handleClose={handleLoginModalClose}
+              padding="15px"
+            />
     )}
     <Row style={{ display: 'flex' }}>
       <Col
@@ -124,7 +145,15 @@ const Signup = () => {
               hovbg="rgb(26, 146, 220)"
               onClick={() => setIsModalOpen(!isModalOpen)}
             >
-              Sign up
+              Sign Up
+            </Button>
+            <Button
+              bg="rgb(29,160,240)"
+              color="rgb(255,255,255)"
+              hovbg="rgb(26, 146, 220)"
+              onClick={() => setIsLoginModalOpen(!isLoginModalOpen)}
+            >
+              Sign In 
             </Button>
           </div>
         </Flex>
