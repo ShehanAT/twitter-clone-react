@@ -4,14 +4,21 @@
 A simple Twitter clone application built using React.js, GraphQL, Node.js and MongoDB. 
 
 ## Screenshots 
-Homepage:
-![Homepage](/screenshots/homepage_image1.png)
+Signup page:
+![Homepage](/screenshots/signup_image1.png)
+
+Homepage page:
+![Homepage](/screenshots/homepage_image2.png)
 
 Bookmarks page:
-![Homepage](/screenshots/bookmarks_image1.png)
+![Bookmarks page](/screenshots/bookmarks_image1.png)
 
 Explore page:
-![Homepage](/screenshots/explore_image1.png)
+![Explore page](/screenshots/explore_image1.png)
+
+Message page:
+![Message page](/screenshots/message_image1.png)
+
 
 ### Live version
 Backend version: https://twitter-clone-node-app.herokuapp.com/ 
