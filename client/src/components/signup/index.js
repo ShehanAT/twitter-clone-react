@@ -9,8 +9,7 @@ import Icon from "../icon";
 import LoginForm from "./loginForm";
 import Modal from "../modal";
 import SignupForm from "./signupForm";
-import OAuth2Login from 'react-simple-oauth2-login';
-import ReactDOM from 'react-dom';
+
 
 const Signup = () => {
 

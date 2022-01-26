@@ -9,6 +9,7 @@ import {
   } from 'reactstrap';
 import { apolloClient } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import ReactGoogleLogin from "react-google-login";
 
 
 const validate = (data) => {
@@ -19,13 +20,6 @@ const validate = (data) => {
     errors.password = "Min length of password: 8";
   return errors;
 };
-
-// const Input = ({ input, type, placeholder, meta: { touched, error } }) => (
-//   <React.Fragment>
-//     <input {...input} type={type} placeholder={placeholder} />
-//     {touched && error && <Error>{error}</Error>}
-//   </React.Fragment>
-// );
 
 let LoginForm = (props) => {
  
@@ -39,6 +33,11 @@ let LoginForm = (props) => {
     const [emptyFieldsErrorMessage, setEmptyFieldsErrorMessage] = useState(false);
 
     const navigate = useNavigate();
+
+    const oauth2Handler = (error, data) => {
+        if(error) return console.error(error);
+        console.log(data);
+    }
  
     // Showing error message if error is true
     const showEmptyFieldsErrorMessage = () => {
@@ -92,9 +91,14 @@ let LoginForm = (props) => {
         }
     }
 
+    const onResponse = resp => {
+        console.log(resp);
+    }
+
 
     const { credentialError, loginDisabled } = props;
     return (
+        <>
         <Form isLogin>
             <div>
             {/* <Field
@@ -152,10 +156,22 @@ let LoginForm = (props) => {
                 disabled={loginDisabled}
                 onClick={handleLoginClick}
             >
+            <div>{process.env.TWITTER_API_KEY}</div>
                 {loginDisabled ? "Logging in" : "Log in"}
             </Button>
             </span>
         </Form>
+
+            <Form>
+            <ReactGoogleLogin
+                clientId={process.env.REACT_APP_GCP_CLIENT_ID}
+                // {process.env.GCP_CLIENT_ID} // We created this, remember?
+                buttonText="Login with Google"
+                onSuccess={onResponse}
+                onFailure={onResponse}
+            />
+            </Form>
+        </>
     );
 };
 
