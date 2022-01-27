@@ -165,7 +165,6 @@ let LoginForm = (props) => {
             <Form>
             <ReactGoogleLogin
                 clientId={process.env.REACT_APP_GCP_CLIENT_ID}
-                // {process.env.GCP_CLIENT_ID} // We created this, remember?
                 buttonText="Login with Google"
                 onSuccess={onResponse}
                 onFailure={onResponse}
