@@ -93,6 +93,16 @@ let LoginForm = (props) => {
 
     const onResponse = resp => {
         console.log(resp);
+        const jwtToken = resp.tokenId;
+        const userFirstName = resp.profileObj.givenName;
+        const userId = resp.profileObj.googleId
+
+        sessionStorage.setItem("jwtToken", jwtToken);
+        sessionStorage.setItem("loggedInUserFirstName", userFirstName);
+        sessionStorage.setItem("loggedInUserId", userId);
+        
+        navigate("/home");
+        window.location.reload(false);
     }
 
 
