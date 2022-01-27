@@ -123,11 +123,11 @@ const Signup = () => {
         </LogoWrapper>
       </Col>
       <Col md={12} xs={24} style={{ padding: "15px" }}>
-        <LoginForm
+        {/* <LoginForm
           onSubmit={handleSubmit}
           credentialError={credentialError}
           loginDisabled={loginDisabled}
-        />
+        /> */}
         <Flex>
           <div>
             <Icon
@@ -138,22 +138,26 @@ const Signup = () => {
             />
             <h1>See what's happening in the world right now</h1>
             <p>Join twitter today.</p>
-            <Button
-              bg="rgb(29,160,240)"
-              color="rgb(255,255,255)"
-              hovbg="rgb(26, 146, 220)"
-              onClick={() => setIsModalOpen(!isModalOpen)}
-            >
-              Sign Up
-            </Button>
-            <Button
-              bg="rgb(29,160,240)"
-              color="rgb(255,255,255)"
-              hovbg="rgb(26, 146, 220)"
-              onClick={() => setIsLoginModalOpen(!isLoginModalOpen)}
-            >
-              Sign In 
-            </Button>
+            <Col>
+              <Button
+                bg="rgb(29,160,240)"
+                color="rgb(255,255,255)"
+                hovbg="rgb(26, 146, 220)"
+                onClick={() => setIsModalOpen(!isModalOpen)}
+                style={{ margin: "15px" }}
+              >
+                Sign Up
+              </Button>
+              <Button
+                bg="rgb(29,160,240)"
+                color="rgb(255,255,255)"
+                hovbg="rgb(26, 146, 220)"
+                onClick={() => setIsLoginModalOpen(!isLoginModalOpen)}
+                style={{ margin: "15px" }}
+              >
+                Sign In 
+              </Button>
+            </Col>
           </div>
         </Flex>
       </Col>
