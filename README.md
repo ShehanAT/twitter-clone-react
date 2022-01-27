@@ -5,7 +5,7 @@ A simple Twitter clone application built using React.js, GraphQL, Node.js and Mo
 
 ## Screenshots 
 Signup page:
-![Homepage](/screenshots/signup_image1.png)
+![Signup page](/screenshots/signup_image1_new.png)
 
 Homepage page:
 ![Homepage](/screenshots/homepage_image2.png)
