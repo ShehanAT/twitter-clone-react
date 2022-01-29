@@ -25,7 +25,7 @@ Frontend version: https://gracious-khorana-ceda2c.netlify.app/
 
 # Getting Started
   
-### Running with Docker 
+### Running with Docker  
 To run this application using Docker just follow the steps below:
 1. Clone this repo 
 2. Cd into the ```{root_director}``` directory and run ```docker-compose up -d``` to 
