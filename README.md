@@ -24,7 +24,7 @@ Backend version: https://twitter-clone-node-app.herokuapp.com/
 Frontend version: https://gracious-khorana-ceda2c.netlify.app/  
 
 # Getting Started
-
+  
 ### Running with Docker 
 To run this application using Docker just follow the steps below:
 1. Clone this repo 
