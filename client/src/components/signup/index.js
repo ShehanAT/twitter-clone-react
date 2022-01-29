@@ -75,6 +75,7 @@ const Signup = () => {
             loginDisabled={loginDisabled}
             handleModalClose={() => setIsModalOpen(!isModalOpen)}/>
         }
+      
         handleClose={() => setIsModalOpen(!isModalOpen)}
         padding="15px"
       />

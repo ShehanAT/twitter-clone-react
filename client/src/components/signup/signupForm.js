@@ -12,6 +12,7 @@ import {
 } from '../graphql'; 
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import "./signupForm.css";
 
 const validate = (data) => {
   const errors = {};
@@ -97,8 +98,11 @@ let SignupForm = (props) => {
     };
 
     return (
-        <form onSubmit={handleSignupFormSubmit}>
-        <Form>
+        <form 
+            onSubmit={handleSignupFormSubmit} 
+          
+        >
+        <Form className="signup-form-input-container">
                 {/* Labels and inputs for form data */}
                 <FormGroup row>
                 <Label className="label">First Name</Label>
@@ -106,31 +110,31 @@ let SignupForm = (props) => {
                 value={firstName} type="text" />
                 </FormGroup>
         
-                <FormGroup row>
+                <FormGroup row >
                 <Label className="label">Last Name</Label>
                 <Input onChange={(e) => setLastName(e.target.value)} className="input"
                 value={lastName} type="text" />
                 </FormGroup>
         
-                <FormGroup row>
+                <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Email</Label>
                 <Input onChange={(e) => setEmail(e.target.value)} className="input"
                 value={email} type="email" />
                 </FormGroup> 
                 
-                <FormGroup row>
+                <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Password</Label>
                 <Input onChange={(e) => setPassword(e.target.value)} className="input"
                     value={password} type="password" />
                 </FormGroup>
         
-                <FormGroup row>
+                <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Confirm Password</Label>
                 <Input onChange={(e) => setConfirmPassword(e.target.value)} className="input"
                     value={confirmPassword} type="password" />
                 </FormGroup>
         
-                <FormGroup row>
+                <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Age</Label>
                 <Input onChange={(e) => setAge(e.target.value)} className="input"
                     value={age} type="number" />
@@ -142,6 +146,7 @@ let SignupForm = (props) => {
             color="rgb(29, 161, 242)"
             hovbg="rgba(29,161,242,0.1)"
             disabled={loginDisabled}
+            id="submitButton"
         >
             Sign Up
         </Button>

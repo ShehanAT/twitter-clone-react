@@ -166,7 +166,6 @@ let LoginForm = (props) => {
                 disabled={loginDisabled}
                 onClick={handleLoginClick}
             >
-            <div>{process.env.TWITTER_API_KEY}</div>
                 {loginDisabled ? "Logging in" : "Log in"}
             </Button>
             </span>

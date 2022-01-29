@@ -10,11 +10,11 @@ Signup page:
 Homepage page:
 ![Homepage](/screenshots/homepage_image2.png)
 
-Bookmarks page:
-![Bookmarks page](/screenshots/bookmarks_image1.png)
+Signup Form:
+![Signup page](/screenshots/signup_image2_signupform.png)
 
-Explore page:
-![Explore page](/screenshots/explore_image1.png)
+Login Form:
+![Login page](/screenshots/signup_image3_loginForm.png)
 
 Message page:
 ![Message page](/screenshots/messages_image1.png)
