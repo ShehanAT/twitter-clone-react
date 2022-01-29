@@ -19,7 +19,7 @@ Login Form:
 Message page:
 ![Message page](/screenshots/messages_image1.png)
 
-### Live version
+### Live version  
 Backend version: https://twitter-clone-node-app.herokuapp.com/  
 Frontend version: https://gracious-khorana-ceda2c.netlify.app/  
 
