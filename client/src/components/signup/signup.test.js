@@ -25,7 +25,7 @@ global.matchMedia = global.matchMedia || function () {
       addListener: jest.fn(),
       removeListener: jest.fn(),
     };
-  };
+};
 
 describe("Signup page should contain important page elements", function() {
 
