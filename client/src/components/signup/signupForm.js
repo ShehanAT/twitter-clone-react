@@ -107,37 +107,37 @@ let SignupForm = (props) => {
                 <FormGroup row>
                 <Label className="label">First Name</Label>
                 <Input onChange={(e) => setFirstName(e.target.value)} className="input"
-                value={firstName} type="text" />
+                value={firstName} type="text" placeholder="First Name"/>
                 </FormGroup>
         
                 <FormGroup row >
                 <Label className="label">Last Name</Label>
                 <Input onChange={(e) => setLastName(e.target.value)} className="input"
-                value={lastName} type="text" />
+                value={lastName} type="text" placeholder="Last Name"/>
                 </FormGroup>
         
                 <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Email</Label>
                 <Input onChange={(e) => setEmail(e.target.value)} className="input"
-                value={email} type="email" />
+                value={email} type="email" placeholder="Email"/>
                 </FormGroup> 
                 
                 <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Password</Label>
                 <Input onChange={(e) => setPassword(e.target.value)} className="input"
-                    value={password} type="password" />
+                    value={password} type="password" placeholder="Password"/>
                 </FormGroup>
         
                 <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Confirm Password</Label>
                 <Input onChange={(e) => setConfirmPassword(e.target.value)} className="input"
-                    value={confirmPassword} type="password" />
+                    value={confirmPassword} type="password" placeholder="Confirm Password"/>
                 </FormGroup>
         
                 <FormGroup row className="signup-form-input-secondary">
                 <Label className="label">Age</Label>
                 <Input onChange={(e) => setAge(e.target.value)} className="input"
-                    value={age} type="number" />
+                    value={age} type="number" placeholder="Age"/>
                 </FormGroup>
             </Form>
         <Button
