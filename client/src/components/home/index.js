@@ -13,7 +13,7 @@ import MenuBar from '../menubar/index';
 import { toast } from 'react-toastify';
 import PaginatedItems from './paginatedItems';
 
-function Home() {
+function Home({ mockTweets }) {
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
     const { loading, data, subscribeToMore } = useQuery(TWEETS_QUERY);
@@ -43,6 +43,7 @@ function Home() {
       if(userFirstName){
         toast("Welcome " + userFirstName);
       }
+      console.log(mockTweets);
     });
   
   return (
@@ -52,9 +53,11 @@ function Home() {
           <MenuBar />
         </Col>
       <Col lg={2} md={0} xs={0}>
-        {data ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
-        // <SideBar loading={loading} data={data} key={dataId}/> 
+        {data && !mockTweets ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
         : null }
+        {mockTweets ? <PaginatedItems itemsPerPage={4} allItems={mockTweets.data.tweets} />
+        : null 
+        }
       </Col>
     </Row>
   </React.Fragment>

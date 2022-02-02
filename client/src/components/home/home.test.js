@@ -14,9 +14,10 @@ import redux from "../../redux/store";
 import { GRAPHQL_HTTP_SERVER_URL, GRAPHQL_WS_SERVER_URL } from '../../environment';
 import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
+import mockTweetsResponse from "../../__mocks__/graphqlResponse";
 
 describe("Homepage should contain important page elements", function() {
-
+    configure({ adapter: new Adapter() })
 
     it('Should render Home anchor tag', function(){
         const element = shallow(<a href="/home" />);
@@ -93,30 +94,15 @@ describe("Homepage should contain important page elements", function() {
             <BrowserRouter>
             <ApolloProvider client={client}>
               <Provider store={redux.store}>
-                  <Home />
+                  <Home mockTweets={mockTweetsResponse} />
               </Provider>
             </ApolloProvider>
           </BrowserRouter>        
         );
 
-        // find way to Homepage to use mock data in order to confirm the length of 'div.all-tweets-container' element
+        // Update 1: Find way to Homepage to use mock data in order to confirm the length of 'div.all-tweets-container' element
+        // Update 2: Should be passing data to Home component but mock data is not rendering, find way to investigate further and resolve issue
+        expect(HomeComponent.find("div.all-tweets-containers").length).toBe(1);
 
-        expect(HomeComponent.find("div.all-tweets-container").length).toBe(1);
-        // render(
-        //     <BrowserRouter>
-        //     <ApolloProvider client={client}>
-        //       <Provider store={redux.store}>
-        //           <Home />
-        //       </Provider>
-        //     </ApolloProvider>
-        //   </BrowserRouter>
-        // )
-
-        // const signUpButton = screen.get("Sign Up");
-        // fireEvent.click(signUpButton);
-        // const passwordField = screen.getByPlaceholderText("Age");
-        // fireEvent.click(passwordField);
-        // fireEvent.change(passwordField, { target: { value: "45" }});
-        // expect(passwordField.value).toBe("45");
     });
 })
