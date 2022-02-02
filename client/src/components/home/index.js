@@ -53,11 +53,12 @@ function Home({ mockTweets }) {
           <MenuBar />
         </Col>
       <Col lg={2} md={0} xs={0}>
+        {mockTweets ? <PaginatedItems itemsPerPage={4} allItems={mockTweets.data.tweets} />
+          : null 
+        }
         {data && !mockTweets ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
         : null }
-        {mockTweets ? <PaginatedItems itemsPerPage={4} allItems={mockTweets.data.tweets} />
-        : null 
-        }
+      
       </Col>
     </Row>
   </React.Fragment>

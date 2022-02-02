@@ -275,7 +275,7 @@ const mockTweetsResponse = {
     }
 }
 
-
-export default {
-    get: jest.fn().mockResolvedValue(mockTweetsResponse)
-}
+export default mockTweetsResponse;
+// export default {
+//     get: jest.fn().mockResolvedValue(mockTweetsResponse)
+// }

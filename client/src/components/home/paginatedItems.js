@@ -31,7 +31,7 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
       <>
         <h3>Welcome {sessionStorage.getItem("loggedInUserFirstName")}!</h3>
         <h3>Your Latest Tweets: </h3>
-        <div class="all-tweets-container">
+        <div class="all-tweets-container" name="all-tweets-container">
           <TweetItems currentTweetItems={currentItems} />
         </div>
         <ReactPaginate 

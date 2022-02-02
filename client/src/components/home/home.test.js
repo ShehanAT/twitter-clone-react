@@ -15,6 +15,14 @@ import { GRAPHQL_HTTP_SERVER_URL, GRAPHQL_WS_SERVER_URL } from '../../environmen
 import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
 import mockTweetsResponse from "../../__mocks__/graphqlResponse";
+import { render, screen, fireEvent } from "@testing-library/react";
+
+global.matchMedia = global.matchMedia || function () {
+    return {
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+    };
+};
 
 describe("Homepage should contain important page elements", function() {
     configure({ adapter: new Adapter() })
@@ -59,9 +67,7 @@ describe("Homepage should contain important page elements", function() {
         expect(element.find('span').length).toBe(1);
     });
 
-  
-    it('Tweets container should contain tweets', function(){
-        configure({ adapter: new Adapter() })
+    function getApolloClient(){
         const httpLink = new HttpLink({
             uri: GRAPHQL_HTTP_SERVER_URL
           });
@@ -89,10 +95,16 @@ describe("Homepage should contain important page elements", function() {
             cache: new InMemoryCache().restore({}),
         });
 
-          
-        const HomeComponent = shallow(
+        return client;
+    }
+  
+    it('Tweets container should contain 4 tweets', function(){
+        configure({ adapter: new Adapter() })
+    
+
+        const HomeComponent = render(
             <BrowserRouter>
-            <ApolloProvider client={client}>
+            <ApolloProvider client={getApolloClient()}>
               <Provider store={redux.store}>
                   <Home mockTweets={mockTweetsResponse} />
               </Provider>
@@ -100,9 +112,26 @@ describe("Homepage should contain important page elements", function() {
           </BrowserRouter>        
         );
 
-        // Update 1: Find way to Homepage to use mock data in order to confirm the length of 'div.all-tweets-container' element
-        // Update 2: Should be passing data to Home component but mock data is not rendering, find way to investigate further and resolve issue
-        expect(HomeComponent.find("div.all-tweets-containers").length).toBe(1);
+        const result = HomeComponent.container.querySelector(".all-tweets-container");
+        expect(result.children.length).toBe(4);
+        // expect(result.firstChild.textContent).not.toBe("");
+    });
 
+    it('Tweets container should contain a tweet with text context', function(){
+        configure({ adapter: new Adapter() })
+    
+
+        const HomeComponent = render(
+            <BrowserRouter>
+            <ApolloProvider client={getApolloClient()}>
+              <Provider store={redux.store}>
+                  <Home mockTweets={mockTweetsResponse} />
+              </Provider>
+            </ApolloProvider>
+          </BrowserRouter>        
+        );
+
+        const result = HomeComponent.container.querySelector(".all-tweets-container");
+        expect(result.firstChild.textContent).not.toBe("");
     });
 })
