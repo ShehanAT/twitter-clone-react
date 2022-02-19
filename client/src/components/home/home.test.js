@@ -114,7 +114,6 @@ describe("Homepage should contain important page elements", function() {
 
         const result = HomeComponent.container.querySelector(".all-tweets-container");
         expect(result.children.length).toBe(4);
-        // expect(result.firstChild.textContent).not.toBe("");
     });
 
     it('Tweets container should contain a tweet with text context', function(){
