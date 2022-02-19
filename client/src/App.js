@@ -1,45 +1,25 @@
-import React, { useState } from 'react';
-import { useSelector } from "react-redux";
-import { Route, Routes } from 'react-router-dom';
-import Signup from "./components/signup/index";
-import Home from "./components/home/index";
-import Explore from "./components/explore/index";
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import BookMarks from "./components/bookmarks/index";
-import Notifications from './components/notifications';
-import Messages from './components/messages';
-import Lists from './components/lists';
-import Profile from './components/profile';
+import logo from './logo.svg';
+import './App.css';
 
-export const apolloClient = new ApolloClient({
-  uri: "http://localhost:8080",
-  cache: new InMemoryCache(),
-});
-
-const App = () => { 
-
-  const [ isLoggedIn ] = useState(false);
-
-  const theme = useSelector((state) => state.theme);
-
-  const username = sessionStorage.getItem("loggedInUserFirstName");
-
+function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/home" element={<Home/>}></Route>
-        <Route exact path="/explore" element={<Explore/>}/>
-        <Route exact path="/bookmarks" element={<BookMarks/>} />
-        <Route exact path="/home" element={<Home/>} />
-        <Route exact path="/notifications" element={<Notifications/>} />
-        <Route exact path="/messages" element={<Messages/>} />
-        <Route exact path="/lists" element={<Lists/>} />
-        <Route exact path="/profile/:username" element={<Profile username={username}/>} />
-        <Route exact path="/" element={<Signup/>}></Route>
-
-      </Routes>
-    </>
-  )
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
 export default App;
