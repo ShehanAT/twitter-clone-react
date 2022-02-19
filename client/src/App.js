@@ -10,9 +10,10 @@ import Notifications from './components/notifications';
 import Messages from './components/messages';
 import Lists from './components/lists';
 import Profile from './components/profile';
+import { SERVER_URL } from './environment';
 
 export const apolloClient = new ApolloClient({
-  uri: "http://localhost:8080",
+  uri: SERVER_URL,
   cache: new InMemoryCache(),
 });
 
@@ -27,10 +28,9 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/home" element={<Home/>}></Route>
+        <Route path="/home" element={<Home/>}/>
         <Route exact path="/explore" element={<Explore/>}/>
         <Route exact path="/bookmarks" element={<BookMarks/>} />
-        <Route exact path="/home" element={<Home/>} />
         <Route exact path="/notifications" element={<Notifications/>} />
         <Route exact path="/messages" element={<Messages/>} />
         <Route exact path="/lists" element={<Lists/>} />

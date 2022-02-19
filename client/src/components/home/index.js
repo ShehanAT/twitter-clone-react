@@ -43,6 +43,7 @@ function Home({ mockTweets }) {
       if(userFirstName){
         toast("Welcome " + userFirstName);
       }
+      
       console.log(mockTweets);
     });
   

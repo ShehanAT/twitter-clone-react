@@ -10,9 +10,8 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
     // Using item offsets for pagination feature 
     const [ itemOffset, setItemOffset ] = useState(0);
   
-  
-  
     useEffect(() => {
+      allItems = [...allItems].reverse();
       var endOffset = itemOffset + itemsPerPage;
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       setCurrentItems(allItems.slice(itemOffset, endOffset));
@@ -31,7 +30,7 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
       <>
         <h3>Welcome {sessionStorage.getItem("loggedInUserFirstName")}!</h3>
         <h3>Your Latest Tweets: </h3>
-        <div class="all-tweets-container" name="all-tweets-container">
+        <div className="all-tweets-container" name="all-tweets-container">
           <TweetItems currentTweetItems={currentItems} />
         </div>
         <ReactPaginate 

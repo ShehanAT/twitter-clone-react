@@ -1,4 +1,4 @@
-import db from "./database/db.js";
+// import db from "./database/db.js";
 import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
 import Subscription from "./resolvers/Subscription.js";
@@ -32,7 +32,7 @@ const bigIntScalar = new GraphQLScalarType({
 });
 
 const server = new GraphQLServer({
-typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
+typeDefs: `${__dirname}/Schemas/schema.graphql`,
     resolvers: {
         Query,
         Mutation,
@@ -43,7 +43,7 @@ typeDefs: `${__dirname}/server/Schemas/schema.graphql`,
         BigInt: bigIntScalar
     },
     context: {
-        db,
+        // db,
         pubsub 
     },
 });
@@ -59,6 +59,6 @@ mongoose.connection.on('error', () => {
 });
 mongoose.set('debug', true);
 
-server.start({ port: process.env.PORT | 8080}, () => {
-    console.log(`The server is running on port ${process.env.PORT | 8080}`);
+server.start({ port: process.env.PORT | 8081}, () => {
+    console.log(`The server is running on port ${process.env.PORT | 8081}`);
 });
