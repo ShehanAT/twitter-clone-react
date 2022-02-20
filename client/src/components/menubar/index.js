@@ -8,7 +8,7 @@ import { Header, MenuItem, MenuTitle, Button } from "../styles/menubar";
 import TweetModal from "./tweetModal";
 import { LOGOUT_USER, SET_THEME } from "../../redux/actions";
 
-const MenuBar = () => {
+const MenuBar = ({ refreshHome }) => {
     // useState() declares a "state variable". This is a way to "preserve" some values between the function calls 
     const [isModalOpen, setIsModalOpen] = useState(false); 
     // useSelector() allows you to extract data from the Redux store state, using a selector function. 
@@ -70,6 +70,8 @@ const MenuBar = () => {
 
     const handleSubmittedTweetEvent = () => {
       setIsModalOpen(false);
+      refreshHome(true);
+      // window.location.reload();
     }
 
     return (

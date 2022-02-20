@@ -16,8 +16,6 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       setCurrentItems(allItems.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(allItems.length / itemsPerPage));
-      console.log(currentItems);
-      console.log(pageCount);
     }, [itemOffset, itemsPerPage]);
   
     const handlePageClick = (event) => {

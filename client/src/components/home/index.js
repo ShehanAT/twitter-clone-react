@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery  } from '@apollo/react-hooks';
 import { 
   Row, 
   Col,
@@ -12,15 +12,36 @@ import { useSelector } from "react-redux";
 import MenuBar from '../menubar/index';
 import { toast } from 'react-toastify';
 import PaginatedItems from './paginatedItems';
+import { PAUSE } from 'redux-persist/es/constants';
 
-function Home({ mockTweets }) {
+
+function Home() {
   
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
     const { loading, data, subscribeToMore } = useQuery(TWEETS_QUERY);
     const [ dataId, setDataId ] = useState(0);
+    const [refreshComponent, setRefreshComponent] = useState(false);
 
     const theme = useSelector((state) => state.theme);
+
+    const [ refreshHome, setRefreshHome ] = useState(false);
   
+    const pause = (delay) => {
+      return new Promise(res => setTimeout(res, delay));
+    }
+    const handleRefreshHome = async (refreshHomeArg) => {
+      console.log("refreshHomeArg: " + refreshHomeArg);
+      console.log("start waiting");
+      await pause(2000);
+      console.log("done waiting");
+      // setRefreshHome(refreshHomeArg);
+      subscribeToMore();
+      // setRefreshComponent(true);
+      
+      console.log(refreshHome);
+    };
+    
+
     useEffect(() => {
       (async () => {
         try {
@@ -33,35 +54,39 @@ function Home({ mockTweets }) {
             return { tweets: subscriptionData.data.getAllTweets.data }
           },
         });
+        console.log(data.tweets);
+        setRefreshHome(true);
         setDataId(dataId + 1);
       } catch(e) {}
       })();
-    });
-
+    }, [refreshHome]);
+    
+   
     useEffect(() => {
       const userFirstName = sessionStorage.getItem("loggedInUserFirstName");
       if(userFirstName){
         toast("Welcome " + userFirstName);
       }
-      
-      console.log(mockTweets);
     });
   
   return (
     <React.Fragment>
+      <h4>RefreshHome: {refreshHome}</h4>
+      {/* { refreshHome ? <h3>Refreshing homepage...</h3> :  */}
       <Row style={{ background: theme.bg }}>
         <Col lg={4} md={5} xs={5}>
-          <MenuBar />
+          <MenuBar refreshHome={handleRefreshHome}/>
         </Col>
       <Col lg={2} md={0} xs={0}>
-        {mockTweets ? <PaginatedItems itemsPerPage={4} allItems={mockTweets.data.tweets} />
+        {/* {mockTweets ? <PaginatedItems itemsPerPage={4} allItems={mockTweets.data.tweets} />
           : null 
-        }
-        {data && !mockTweets ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
+        }!mockTweets */}
+        {data ? <PaginatedItems itemsPerPage={4} allItems={data.tweets} />
         : null }
       
       </Col>
     </Row>
+    {/* } */}
   </React.Fragment>
     
   );
