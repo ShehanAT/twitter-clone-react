@@ -9,14 +9,19 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
     const [ pageCount, setPageCount ] = useState(0);
     // Using item offsets for pagination feature 
     const [ itemOffset, setItemOffset ] = useState(0);
-  
+    const [ refreshComponent, setRefreshComponent ] = useState([]);
     useEffect(() => {
       allItems = [...allItems].reverse();
       var endOffset = itemOffset + itemsPerPage;
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       setCurrentItems(allItems.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(allItems.length / itemsPerPage));
-    }, [itemOffset, itemsPerPage]);
+    }, [itemOffset, itemsPerPage, allItems]);
+
+    // useEffect(() => {
+    //   console.log(allItems);
+    //   setRefreshComponent([...refreshComponent, 1]);
+    // },[allItems]);
   
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % allItems.length;
@@ -26,6 +31,7 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
   
     return (
       <>
+        <h3>RefreshComponent: {refreshComponent} </h3>
         <h3>Welcome {sessionStorage.getItem("loggedInUserFirstName")}!</h3>
         <h3>Your Latest Tweets: </h3>
         <div className="all-tweets-container" name="all-tweets-container">
