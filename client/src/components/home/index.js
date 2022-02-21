@@ -29,11 +29,8 @@ function Home() {
     }
 
     const handleRefreshHome = async (refreshHomeArg) => {
-      console.log("refreshHomeArg: " + refreshHomeArg);
-      console.log("start waiting");
       await pause(1000);
       refetch();
-      console.log("done waiting");
     };
    
     useEffect(() => {
