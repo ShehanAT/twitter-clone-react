@@ -7,5 +7,33 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.3",
+    "aws-sdk": "^2.1082.0",
+    "bcrypt": "^5.0.1",
+    "crypto": "^1.0.1",
+    "graphql-shield": "^7.5.0",
+    "graphql-type-long": "^0.1.1",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "mime": "^3.0.0",
+    "mongoose": "^6.2.3",
+    "mongoose-paginate": "^5.0.3",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "nodemon": "^2.0.15",
+    "path": "^0.12.7",
+    "sanitize-filename": "^1.6.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/plugin-transform-arrow-functions": "^7.16.7",
+    "@babel/preset-env": "^7.16.11"
+  }
 }
