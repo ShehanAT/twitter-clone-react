@@ -1,9 +1,7 @@
 import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
 import Subscription from "./resolvers/Subscription.js";
-import User from "./resolvers/User.js";
 import Tweet from "./resolvers/Tweet.js";
-import Comment from "./resolvers/Comment.js";
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import mongoose from "mongoose";
 import path from "path";
@@ -35,10 +33,8 @@ typeDefs: `${__dirname}/Schemas/schema.graphql`,
     resolvers: {
         Query,
         Mutation,
-        Subscription,
-        User, 
+        Subscription, 
         Tweet,
-        Comment,
         BigInt: bigIntScalar
     },
     context: {
