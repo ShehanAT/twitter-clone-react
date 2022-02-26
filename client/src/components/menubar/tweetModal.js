@@ -10,7 +10,6 @@ import {
 import  user_avatar  from "../../assets/user_avatar.png";
 import { 
   CREATE_TWEETS_MUTATION,
-  GET_ALL_TWEETS_SUBSCRIPTION,
   TWEETS_QUERY
 } from '../graphql'; 
 import "./tweetModal.css";
@@ -28,21 +27,6 @@ const TweetModal = (props) => {
 
   // useMutation() is the primary API for executing queries in an Apollo application
   const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
-
-  useEffect(() => {
-    try {
-      // subscribeToMore() executes a subscription that pushes updates to the query's original result 
-      subscribeToMore({
-        document: GET_ALL_TWEETS_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if(!subscriptionData.data) return prev;
-
-          return { tweets: subscriptionData.data.getAllTweets.data }
-        },
-      });
-
-    } catch(e) {}
-  });
 
   const handleSubmittedTweet = props.handleSubmittedTweetEvent;
 

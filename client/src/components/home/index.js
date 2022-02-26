@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery  } from '@apollo/react-hooks';
-import { useSubscription } from '@apollo/client';
 import { 
   Row, 
   Col,
 } from 'reactstrap';
 import { 
-  GET_ALL_TWEETS_SUBSCRIPTION,
   TWEETS_QUERY
 } from '../graphql'; 
 import { useSelector } from "react-redux";
@@ -20,8 +18,7 @@ function Home() {
     // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
     // loading, data, subscribeToMore, refetch 
     const { loading, error, data, refetch } = useQuery(TWEETS_QUERY);
-    const [ dataId, setDataId ] = useState(0);
-
+    
     const theme = useSelector((state) => state.theme);
   
     const pause = (delay) => {

@@ -4,16 +4,6 @@ import bcrypt from 'bcryptjs';
 
 
 const Query = {
-    users(parents, args, { db }, info) {
-        if(!args.query){
-            return db.users;
-        }
-
-        return db.users.filter((user) => {
-            console.log(user.name);
-            return user.name.toLowerCase().includes(args.query.toLowerCase());
-        });
-    },
     async tweets(parent, args, { db }, info){
         const dbTweets = await Tweet.find();
         return dbTweets;
@@ -50,9 +40,6 @@ const Query = {
         }else{
             throw new Error("Invalid Password! Please try again...");
         }
-    },
-    comments(parent, args, { db }, info){
-        
     }
 }
 

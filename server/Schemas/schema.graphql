@@ -2,11 +2,9 @@
 scalar BigInt
 
 type Query {
-    users(query: String): [User!]!
     tweets(query: String): [TweetWithID]
     usersAndTweets(query: String): UsersAndTweets 
     login(query: UserLoginInput): LoginResponse 
-    comments: [Comment!]!
     me: User!
     tweet: Tweet! 
 }
@@ -23,8 +21,6 @@ type Mutation {
 }
 
 type Subscription {
-    comment(tweetId: ID!): CommentSubscriptionPayload! 
-    tweet: TweetSubscriptionPayload!
     getAllTweets: AllTweetsSubscriptionPayload!
     user: UserSubscriptionPayload! 
 }
