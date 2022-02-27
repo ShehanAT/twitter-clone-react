@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import UploadButton from "../uploadButton";
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { Flex, Button } from "../styles/modal";
 import { 
   Form,
@@ -9,21 +9,16 @@ import {
 } from 'reactstrap';
 import  user_avatar  from "../../assets/user_avatar.png";
 import { 
-  CREATE_TWEETS_MUTATION,
-  TWEETS_QUERY
+  CREATE_TWEETS_MUTATION
 } from '../graphql'; 
 import "./tweetModal.css";
 const URL = process.env.REACT_APP_SERVER_URL;
 
 const TweetModal = (props) => {
-  const [text, setText] = useState("");
   const [isTweetDisabled, setIsTweetDisabled] = useState(false);
   const [preview, setPreview] = useState({ image: "", video: "", media: null });
 
   const [ tweetBody, setTweetBody ] = useState("");
-
-  // useQuery() is the primary API for executing queries in an Apollo application. To run a query within a React component, call `useQuery` and pass it a GraphQL query string. 
-  const { subscribeToMore } = useQuery(TWEETS_QUERY);
 
   // useMutation() is the primary API for executing queries in an Apollo application
   const [addTweet] = useMutation(CREATE_TWEETS_MUTATION);
@@ -71,7 +66,6 @@ const TweetModal = (props) => {
 
 
   return (
-    
     <div>
       <Form onSubmit={handleFormSubmit}>
       <Flex bg={theme.bg} color={theme.color}>

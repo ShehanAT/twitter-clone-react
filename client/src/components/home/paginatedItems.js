@@ -17,11 +17,6 @@ const PaginatedItems = ({ itemsPerPage, allItems }) => {
       setCurrentItems(allItems.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(allItems.length / itemsPerPage));
     }, [itemOffset, itemsPerPage, allItems]);
-
-    // useEffect(() => {
-    //   console.log(allItems);
-    //   setRefreshComponent([...refreshComponent, 1]);
-    // },[allItems]);
   
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % allItems.length;
