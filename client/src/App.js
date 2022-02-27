@@ -19,10 +19,6 @@ export const apolloClient = new ApolloClient({
 
 const App = () => { 
 
-  const [ isLoggedIn ] = useState(false);
-
-  const theme = useSelector((state) => state.theme);
-
   const username = sessionStorage.getItem("loggedInUserFirstName");
 
   return (
