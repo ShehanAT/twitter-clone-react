@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useSelector } from "react-redux";
+import { Route, Routes } from 'react-router-dom';
+import Signup from "./components/signup/index";
+import Home from "./components/home/index";
+import Explore from "./components/explore/index";
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import BookMarks from "./components/bookmarks/index";
+import Notifications from './components/notifications';
+import Messages from './components/messages';
+import Lists from './components/lists';
+import Profile from './components/profile';
+import { SERVER_URL } from './environment';
 
-function App() {
+
+
+const App = () => { 
+
+  const username = sessionStorage.getItem("loggedInUserFirstName");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+     
+    </>
+  )
 }
 
 export default App;
