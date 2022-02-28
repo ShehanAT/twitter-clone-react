@@ -1,0 +1,142 @@
+
+scalar BigInt
+
+type Query {
+    tweets(query: String): [TweetWithID]
+    usersAndTweets(query: String): UsersAndTweets 
+    login(query: UserLoginInput): LoginResponse 
+    me: User!
+    tweet: Tweet! 
+}
+
+type Mutation {
+    createUser(data: CreateUserInput!): User! 
+    updateUser(data: UpdateUserInput!): User
+    deleteUser(id: ID!): User! 
+    createTweet(data: CreateTweetInput!): Tweet
+    updateTweet(data: UpdateTweetInput!): User 
+    deleteTweet(id: ID!): Tweet!
+    createComment(data: CreateCommentInput!): Tweet!
+    deleteComment(id: ID!): Comment! 
+}
+
+type Subscription {
+    getAllTweets: AllTweetsSubscriptionPayload!
+    user: UserSubscriptionPayload! 
+}
+
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    age: Int 
+    password: String 
+    tweets: [Tweet]
+    comments: [Comment]
+}
+
+type Tweet {
+    id: ID!
+    body: String
+    published: Boolean
+    author: User
+    comments: [Comment]
+}
+
+type TweetWithID {
+    id: BigInt 
+    body: String 
+    published: Boolean 
+    author: User 
+    comments: [ Comment ]
+}
+
+type Comment {
+    id: ID!
+    text: String!
+    author: User!
+    tweet: Tweet!
+}
+
+type UsersAndTweets {
+    users: [User]
+    tweets: [TweetWithID]
+}
+
+type AllTweetsWithID {
+    tweets: [TweetWithID]
+}
+
+enum MutationType {
+    CREATED
+    DELETED
+    UPDATED
+}
+
+input CreateUserInput {
+    # ! means non-nullable
+    firstName: String!
+    lastName: String! 
+    email: String! 
+    age: Int 
+    password: String 
+
+}
+
+
+input UpdateUserInput {
+    name: String
+    email: String 
+    age: Int 
+}
+
+input CreateTweetInput {
+    body: String 
+    published: Boolean
+    author: ID
+}
+
+input UserLoginInput {
+    email: String 
+    password: String 
+}
+
+input UpdateTweetInput {
+    body: String 
+    published: Boolean 
+    author: ID
+}
+
+input CreateCommentInput {
+    text: String! 
+    author: ID! 
+    tweet: ID! 
+}
+
+type TweetSubscriptionPayload {
+    mutation: MutationType! 
+    data: Tweet! 
+} 
+
+type AllTweetsSubscriptionPayload {
+    mutation: MutationType 
+    data: [TweetWithID]
+}
+
+type CommentSubscriptionPayload {
+    mutation: MutationType! 
+    data: Comment!
+}
+
+type UserSubscriptionPayload {
+    mutation: MutationType!
+    data: User! 
+}
+
+type LoginResponse {
+    userId: BigInt 
+    userFirstName: String 
+    token: String 
+    tokenExpiration: Int
+}

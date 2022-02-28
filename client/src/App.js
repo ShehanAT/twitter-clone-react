@@ -13,14 +13,24 @@ import Profile from './components/profile';
 import { SERVER_URL } from './environment';
 
 
-
 const App = () => { 
+
 
   const username = sessionStorage.getItem("loggedInUserFirstName");
 
   return (
     <>
-     
+       <Routes>
+        <Route path="/home" element={<Home/>}/>
+        <Route exact path="/explore" element={<Explore/>}/>
+        <Route exact path="/bookmarks" element={<BookMarks/>} />
+        <Route exact path="/notifications" element={<Notifications/>} />
+        <Route exact path="/messages" element={<Messages/>} />
+        <Route exact path="/lists" element={<Lists/>} />
+        <Route exact path="/profile/:username" element={<Profile username={username}/>} />
+        <Route exact path="/" element={<Signup/>}></Route>
+
+      </Routes>
     </>
   )
 }

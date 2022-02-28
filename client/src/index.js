@@ -17,3 +17,43 @@ import { GRAPHQL_HTTP_SERVER_URL, GRAPHQL_WS_SERVER_URL } from './environment';
 import redux from "./redux/store";
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+
+
+const httpLink = new HttpLink({
+  uri: GRAPHQL_HTTP_SERVER_URL
+})
+
+const wsLink = new WebSocketLink({
+  uri: GRAPHQL_WS_SERVER_URL,
+  options: { reconnect: true },
+});
+
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+
+    return (
+      definition.kind === 'OperationDefinition' && 
+      definition.operation === 'subscription'
+    )
+  }
+);
+
+const client = new ApolloClient({
+  link,
+  cache: new InMemoryCache().restore({}),
+});
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={redux.store}>
+      <ApolloProvider client={client}>
+        <PersistGate loading={null} persistor={redux.persistor}>
+          <App/>
+        </PersistGate>
+      </ApolloProvider>
+    </Provider>
+  
+  </BrowserRouter>
+)
+
