@@ -39,9 +39,12 @@ To run this application locally just follow the steps below:
 1. Clone this repo 
 2. Cd into the ```{root_directory}/server``` directory and run ```npm install```
 3. Cd into the ```{root_directory}/client``` directory and run ```npm install```
-4. Run ```node index.js``` from ```{root_directory}/server``` directory 
-5. Run ```npm start``` from ```{root_directory}/client``` 
+4. Run command ```export REACT_APP_GCP_CLIENT_ID=<GCP_CLIENT_ID>```(see below on how to obtain GCP Client ID)
+5. Run ```node index.js``` from ```{root_directory}/server``` directory 
+6. Run ```npm start``` from ```{root_directory}/client``` 
 
+### Get Google Cloud Platform Client ID 
+Go to ```https://console.cloud.google.com/``` and create a new GCP project. Then in the sidebar navigate to 'APIs & Services' -> 'Credentials'. In the following screen, click on 'Create Credentials' and follow the prompt. Finally, the Client ID will be shown in the 'Credentials' screen
 
 ### Prerequisites
 
